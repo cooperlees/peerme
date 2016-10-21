@@ -9,4 +9,4 @@ Tool to discover and generate possible peerings between Internet Autonomous Syst
 
 ## Ubuntu >= 16.10
 - sudo apt install python3-pip git
--  
+- pip3 install aiomysql click
