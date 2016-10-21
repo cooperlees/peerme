@@ -74,7 +74,11 @@ def _handle_debug(ctx, param, debug):
 )
 @click.pass_context
 def main(ctx, debug):
-    ''' Discover and generate potential peering endpoints @ IXs '''
+    '''
+        Discover and generate potential peering endpoints @ IXs
+
+        TODO: Support API calls in ther future as well as a local DB
+    '''
     loop = asyncio.get_event_loop()
     db = peerme_db.PeermeDb(loop)
     loop.run_until_complete(db.get_pool())

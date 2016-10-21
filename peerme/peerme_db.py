@@ -15,7 +15,7 @@ from pymysql import err as pymysql_err
 class PeermeDb():
 
     # TODO: Move to Config File
-    HOST = '2a01:7e01::f03c:91ff:fea1:5ecf'
+    HOST = 'localhost'
     USER = 'peeringdb'
     PASS = 'l33tasbr0'
     PORT = 3306
@@ -24,7 +24,7 @@ class PeermeDb():
     def __init__(self, loop=None):
         self.loop = loop if loop else asyncio.get_event_loop()
 
-    # TODO: Maybe move to an async await usage possibly
+    # TODO: Maybe move to an async with usage possibly
 #    def __aenter__(self):
 #        pass
 #
