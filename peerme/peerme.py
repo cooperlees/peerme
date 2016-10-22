@@ -14,7 +14,6 @@ from os.path import expanduser
 
 import config as peerme_config
 import peerme_db
-import discover
 
 # TODO: Get relative imports working
 # SystemError: Parent module '' not loaded, cannot perform relative import
@@ -31,6 +30,9 @@ class PeermeCmd():
     def __init__(self, main_opts):
         ''' Store Global main arguments etc. '''
         self.opts = main_opts
+
+
+
 
 
 class Options():
@@ -100,7 +102,10 @@ def main(ctx, config, debug):
 
 def add_internal_modules():
     ''' Add internal modules to main parser '''
-    main.add_command(discover.DiscoverCli().discover)
+    from check_routing import CheckRoutingCli
+    main.add_command(CheckRoutingCli().check_routing)
+    from discover import DiscoverCli
+    main.add_command(DiscoverCli().discover)
 
 
 if __name__ == '__main__':

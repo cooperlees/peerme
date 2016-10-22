@@ -7,7 +7,7 @@
 import click
 import logging
 
-import peerme
+from peerme import PeermeCmd
 
 
 class CheckRoutingCli():
@@ -24,13 +24,12 @@ class CheckRoutingCli():
         help='Destination IXP for traffic',
     )
     @click.pass_obj
-    def discover(cli_opts, dest_asn, dest_ixp):
-        ''' Build a btpkg package and upload to seeders '''
+    def check_routing(cli_opts, dest_asn, dest_ixp):
+        ''' Lets check the traffic paths are as desired '''
         CheckRouting(cli_opts).run(dest_asn, dest_ixp)
 
 
-class CheckRouting(peerme.PeermeCmd):
-    ''' Lets check the traffic paths are as desired '''
+class CheckRouting(PeermeCmd):
 
     def run(self, dest_asn, dest_ixp):
         pass

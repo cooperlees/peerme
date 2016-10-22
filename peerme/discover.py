@@ -10,7 +10,7 @@ import logging
 
 # TODO(cooper): Make relative imports work
 #from . import peerme
-import peerme
+from peerme import PeermeCmd
 
 
 class DiscoverCli():
@@ -24,12 +24,11 @@ class DiscoverCli():
     )
     @click.pass_obj
     def discover(cli_opts, yes):
-        ''' Display a human readable list of peering options '''
+        ''' All Discovered potential peerings '''
         DiscoverPeers(cli_opts).run(yes)
 
 
-class DiscoverPeers(peerme.PeermeCmd):
-    ''' All Discover related fun '''
+class DiscoverPeers(PeermeCmd):
 
     # TODO: Delete
     async def dbTest(self):
