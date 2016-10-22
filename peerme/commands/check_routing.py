@@ -7,7 +7,7 @@
 import click
 import logging
 
-from peerme import PeermeCmd
+from .cli_common import PeermeCmd
 
 
 class CheckRoutingCli():

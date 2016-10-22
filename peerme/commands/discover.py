@@ -8,9 +8,7 @@
 import click
 import logging
 
-# TODO(cooper): Make relative imports work
-#from . import peerme
-from peerme import PeermeCmd
+from .cli_common import PeermeCmd
 
 
 class DiscoverCli():

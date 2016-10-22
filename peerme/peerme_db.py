@@ -9,8 +9,9 @@ import logging
 
 import sys
 
-import peer
+from . import peer
 import aiomysql
+
 from pymysql import err as pymysql_err
 
 class PeermeDb():

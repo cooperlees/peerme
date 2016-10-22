@@ -11,9 +11,11 @@ import sys
 import time
 
 from os.path import expanduser
-
-import config as peerme_config
-import peerme_db
+from peerme import config as peerme_config
+from peerme import peerme_db
+from peerme.commands.check_routing import CheckRoutingCli
+from peerme.commands.discover import DiscoverCli
+from peerme.commands.request import RequestCli
 
 # TODO: Get relative imports working
 # SystemError: Parent module '' not loaded, cannot perform relative import
@@ -22,14 +24,6 @@ import peerme_db
 #)
 
 CLICK_CONTEXT_SETTINGS = {'help_option_names': ('-h', '--help')}
-
-
-class PeermeCmd():
-    ''' Base class for all sub commands to inherit from '''
-
-    def __init__(self, main_opts):
-        ''' Store Global main arguments etc. '''
-        self.opts = main_opts
 
 
 class Options():
@@ -99,11 +93,8 @@ def main(ctx, config, debug):
 
 def add_internal_modules():
     ''' Add internal modules to main parser '''
-    from check_routing import CheckRoutingCli
     main.add_command(CheckRoutingCli().check_routing)
-    from discover import DiscoverCli
     main.add_command(DiscoverCli().discover)
-    from request import RequestCli
     main.add_command(RequestCli().pinder)
 
 
