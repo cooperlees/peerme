@@ -92,7 +92,7 @@ def main(ctx, config, debug):
         TODO: Support API calls in ther future as well as a local DB
     '''
     loop = asyncio.get_event_loop()
-    config_obj = peerme_config.PeermeConfig()
+    config_obj = peerme_config.PeermeConfig(config)
     # TODO: Move Database config to conf file
     db = peerme_db.PeermeDb(loop)
     loop.run_until_complete(db.get_pool())
