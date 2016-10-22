@@ -12,7 +12,7 @@ class Peer():
 
     def __repr__(self):
         base_string = (
-            '<IX: {IX}, ASN: {ASN}, IPv4: {PEER_IPV4}, IPv6: {PEER_IPV6}')
+            '<IX: {IX}, ASN: {ASN}, IPv4: {PEER_IPV4}, IPv6: {PEER_IPV6}>')
         peer_string = base_string.format(
             IX=self.ix_desc,
             ASN=self.asn,

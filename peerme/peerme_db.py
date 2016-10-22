@@ -121,7 +121,6 @@ class PeermeDb():
         common_fids = list(set(my_fids) & set(peer_fids))
         for fid in common_fids:
             ips_in_fid = await self.get_ips_by_asn_fid(asn, fid)
-            print(ips_in_fid)
             fidlongname = await self.get_fidlongname_by_fid(fid)
             for ip in ips_in_fid:
                 this_peer = peer.Peer()
