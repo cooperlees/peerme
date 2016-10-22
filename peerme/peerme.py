@@ -32,9 +32,6 @@ class PeermeCmd():
         self.opts = main_opts
 
 
-
-
-
 class Options():
     ''' Object for holding shared object between subcommands '''
     def __init__(self, debug, start_time, db, loop, config):
@@ -106,6 +103,8 @@ def add_internal_modules():
     main.add_command(CheckRoutingCli().check_routing)
     from discover import DiscoverCli
     main.add_command(DiscoverCli().discover)
+    from request import RequestCli
+    main.add_command(RequestCli().pinder)
 
 
 if __name__ == '__main__':
