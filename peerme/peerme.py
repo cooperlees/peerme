@@ -10,6 +10,9 @@ import logging
 import sys
 import time
 
+from os.path import expanduser
+
+import config as peerme_config
 import peerme_db
 import discover
 
@@ -32,7 +35,8 @@ class PeermeCmd():
 
 class Options():
     ''' Object for holding shared object between subcommands '''
-    def __init__(self, debug, start_time, db, loop):
+    def __init__(self, debug, start_time, db, loop, config):
+        self.config = config
         self.db = db
         self.debug = debug
         self.loop = loop
@@ -66,6 +70,12 @@ def _handle_debug(ctx, param, debug):
 
 @click.group(context_settings=CLICK_CONTEXT_SETTINGS)
 @click.option(
+    '-c',
+    '--config',
+    default='{}/.peerme.conf'.format(expanduser('~')),
+    help='Config File Location - Default: ~/.peerme.conf',
+)
+@click.option(
     '-d',
     '--debug',
     is_flag=True,
@@ -73,17 +83,19 @@ def _handle_debug(ctx, param, debug):
     callback=_handle_debug,
 )
 @click.pass_context
-def main(ctx, debug):
+def main(ctx, config, debug):
     '''
         Discover and generate potential peering endpoints @ IXs
 
         TODO: Support API calls in ther future as well as a local DB
     '''
     loop = asyncio.get_event_loop()
+    config_obj = peerme_config.PeermeConfig()
+    # TODO: Move Database config to conf file
     db = peerme_db.PeermeDb(loop)
     loop.run_until_complete(db.get_pool())
     # Class to hold all shared options
-    ctx.obj = Options(debug, time.time(), db, loop)
+    ctx.obj = Options(debug, time.time(), db, loop, config_obj)
 
 
 def add_internal_modules():

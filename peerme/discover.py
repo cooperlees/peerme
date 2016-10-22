@@ -24,7 +24,7 @@ class DiscoverCli():
     )
     @click.pass_obj
     def discover(cli_opts, yes):
-        ''' Build a btpkg package and upload to seeders '''
+        ''' Display a human readable list of peering options '''
         DiscoverPeers(cli_opts).run(yes)
 
 
@@ -40,7 +40,9 @@ class DiscoverPeers(peerme.PeermeCmd):
         click.echo("Time to get some peers discovered - Debug = {}".format(
             self.opts.debug
         ))
-        click.echo("Yes = {}".format(yes))
+
+        click.echo("Config {} = {}".format(self.opts.config.conf_file,
+                                           self.opts.config))
 
         # DB Connection Pool
-        self.opts.loop.run_until_complete(self.dbTest())  # DEBUG
+#        self.opts.loop.run_until_complete(self.dbTest())  # DEBUG
