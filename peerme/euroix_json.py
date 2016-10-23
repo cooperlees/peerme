@@ -14,7 +14,6 @@ import asyncio
 from . import peer
 
 class PeermeDb():
-    MY_ASN = 32934
     BASE_PATH = 'peerme/euroix-json/'
     #this gets JSON files from IXP and save it with proper names
     def __init__(self, loop=None):
@@ -55,7 +54,8 @@ class PeermeDb():
 
     # gives the list of sessions you could establish on an IXP
     # if my_asn is provided, it will remove it from the list
-    def get_session_by_ix(self, IX_name, my_asn=None):
+    async def get_session_by_ix(self, IX_name, my_asn=None):
+        my_asn = self.MY_ASN
         peers_list = [ ]
         #open the file for the givent IXP
         with open(self.BASE_PATH + IX_name, 'r') as f:
@@ -130,27 +130,16 @@ class PeermeDb():
         for filename in file_list:
             #stripping foler name
             filename = re.sub('^.*\/', '', filename)
-            ixp_peers_list = self.get_session_by_ix(filename)
-            #we seek on the peers_list if my_asn is present
-            present = False
+            ixp_peers_list = await self.get_session_by_ix(filename)
+            #we seek on the peers_list if my_asn is present and mark it
+            present = []
             for peer in ixp_peers_list:
                 if peer.asn == int(my_asn):
-                    present = True
+                    present.append(peer.ix_desc)
+            #we seek for the asn we want to peer with, and make sure we are on the same IX
             for peer in ixp_peers_list:
-                if peer.asn == int(asn):
+                if peer.asn == int(asn) and peer.ix_desc in present:
                     #add peer to peers_list if my_asn in not define OR my_asn is present
                     if (my_asn and present) or my_asn is None:
                         peers_list.append(peer)
         return peers_list
-
-
-    #############
-
-    ##this is use to fill the forder with JSON
-    #fetch_json('euroix-list.json')
-    #peers_list = session_on_all_ixp()
-    #peers_list = session_by_ix("FranceIX-MRS") #the list of peers for FranceIX-MRS
-    #peers_list = session_by_ix("FranceIX-MRS", 8218) #the list of peers for FranceIX-MRS without 8218
-    #peers_list = session_by_asn(15169) #the list of all sessions of Google
-    #peers_list = session_by_asn(15169, 32934) #the list of all sessions of Google where Facebook is present on the IXP
-    #for peer in peers_list: print(peer.ix_desc, peer.name, peer.asn, peer.peer_ipv4, peer.peer_ipv6, peer.prefix_limit_v4, peer.prefix_limit_v6, peer.as_set_v4, peer.as_set_v6)
