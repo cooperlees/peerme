@@ -16,6 +16,7 @@ class CheckRoutingCli():
     @click.option(
         '-d',
         '--dest-asn',
+        type=int,
         help='Destination ASN for traffic',
     )
     @click.option(

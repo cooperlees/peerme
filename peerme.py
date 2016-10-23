@@ -12,8 +12,10 @@ import time
 
 from os.path import expanduser
 from peerme import config as peerme_config
-from peerme import peerme_db
+from peerme import peeringdb_mysql
+from peerme import euroix_json
 from peerme.commands.check_routing import CheckRoutingCli
+from peerme.commands.generate import GenerateConfigCli
 from peerme.commands.discover import DiscoverCli
 from peerme.commands.request import RequestCli
 
@@ -75,8 +77,15 @@ def _handle_debug(ctx, param, debug):
     help='Turn on verbose logging',
     callback=_handle_debug,
 )
+@click.option(
+    '-s',
+    '--data-source',
+    help='Choose datasource to get peers from (pdb, euroix)',
+    default='pdb'
+)
+
 @click.pass_context
-def main(ctx, config, debug):
+def main(ctx, config, debug, data_source):
     '''
         Discover and generate potential peering endpoints @ IXs
 
@@ -84,17 +93,22 @@ def main(ctx, config, debug):
     '''
     loop = asyncio.get_event_loop()
     config_obj = peerme_config.PeermeConfig(config)
+    if data_source == 'pdb':
+        peering_api = peeringdb_mysql.PeermeDb(loop)
+    elif data_source == 'euroix':
+        peering_api = euroix_json.PeermeDb(loop)
+    else:
+        sys.exit("NO VALID OPTIONS FOR ")
     # TODO: Move Database config to conf file
-    db = peerme_db.PeermeDb(loop)
-    loop.run_until_complete(db.get_pool())
+#    loop.run_until_complete(peering_api.get_pool())
     # Class to hold all shared options
-    ctx.obj = Options(debug, time.time(), db, loop, config_obj)
-
+    ctx.obj = Options(debug, time.time(), peering_api, loop, config_obj)
 
 def add_internal_modules():
     ''' Add internal modules to main parser '''
     main.add_command(CheckRoutingCli().check_routing)
     main.add_command(DiscoverCli().discover)
+    main.add_command(GenerateConfigCli().generate)
     main.add_command(RequestCli().pinder)
 
 
