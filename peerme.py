@@ -12,7 +12,7 @@ import time
 
 from os.path import expanduser
 from peerme import config as peerme_config
-from peerme import peerme_db
+from peerme import peeringdb_mysql
 from peerme import euroix_json
 from peerme.commands.check_routing import CheckRoutingCli
 from peerme.commands.generate import GenerateConfigCli
@@ -94,7 +94,7 @@ def main(ctx, config, debug, data_source):
     loop = asyncio.get_event_loop()
     config_obj = peerme_config.PeermeConfig(config)
     if data_source == 'pdb':
-        peering_api = peerme_db.PeermeDb(loop)
+        peering_api = peeringdb_mysql.PeermeDb(loop)
     elif data_source == 'euroix':
         peering_api = euroix_json.PeermeDb(loop)
     else:
