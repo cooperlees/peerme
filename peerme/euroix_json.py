@@ -23,7 +23,6 @@ class PeermeDb():
         We HTTP download the data and cache locally
     '''
 
-    MY_ASN = 32934
     #this gets JSON files from IXP and save it with proper names
     BASE_PATH = 'peerme/euroix-json/'
 
