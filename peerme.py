@@ -95,15 +95,15 @@ def main(ctx, config, debug, data_source):
     loop = asyncio.get_event_loop()
     config_obj = peerme_config.PeermeConfig(config)
     if data_source == 'pdbsql':
-        peering_api = peeringdb_mysql.PeermeDb(loop)
+        peering_api = peeringdb_mysql.PeermeDb(config_obj, loop)
     elif data_source == 'euroix':
-        peering_api = euroix_json.PeermeDb(loop)
+        peering_api = euroix_json.PeermeDb(config_obj, loop)
     elif data_source == 'pdbapi':
-        peering_api = peeringdb_api.PeermeDb(loop)
+        peering_api = peeringdb_api.PeermeDb(config_obj, loop)
     else:
-        sys.exit("NO VALID OPTIONS FOR ")
+        raise Exception('Invalid option "{}" for data source.'.format(
+            data_source))
     # TODO: Move Database config to conf file
-#    loop.run_until_complete(peering_api.get_pool())
     # Class to hold all shared options
     ctx.obj = Options(debug, time.time(), peering_api, loop, config_obj)
 
