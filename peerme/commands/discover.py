@@ -8,41 +8,41 @@
 import click
 import logging
 
-# TODO(cooper): Make relative imports work
-#from . import peerme
-import peerme
+from .cli_common import PeermeCmd
 
 
 class DiscoverCli():
 
     @click.command()
     @click.option(
-        '-y',
-        '--yes',
-        help='Auto confirm ...',
-        is_flag=True,
+        '-a',
+        '--asn',
+        help='ASN to discover common IXs.'
     )
+
     @click.pass_obj
-    def discover(cli_opts, yes):
-        ''' Display a human readable list of peering options '''
-        DiscoverPeers(cli_opts).run(yes)
+    def discover(cli_opts, asn):
+        ''' All Discovered potential peerings '''
+        DiscoverPeers(cli_opts).run(asn)
 
 
-class DiscoverPeers(peerme.PeermeCmd):
-    ''' All Discover related fun '''
+class DiscoverPeers(PeermeCmd):
 
     # TODO: Delete
     async def dbTest(self):
         sql_data = await self.opts.db.execute_query()
         print("GOT '{}' from DB".format(sql_data))
 
-    def run(self, yes):
+    def run(self, asn):
         click.echo("Time to get some peers discovered - Debug = {}".format(
             self.opts.debug
         ))
 
         click.echo("Config {} = {}".format(self.opts.config.conf_file,
                                            self.opts.config))
-
-        # DB Connection Pool
-#        self.opts.loop.run_until_complete(self.dbTest())  # DEBUG
+        self.opts.db.MY_ASN = self.opts.config.config['peerme']['my_asn']
+        if asn:
+            peers_result = self.opts.loop.run_until_complete(
+                self.opts.db.get_session_by_asn(asn))
+        for peer in peers_result:
+            print(peer)

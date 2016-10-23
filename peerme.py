@@ -11,10 +11,11 @@ import sys
 import time
 
 from os.path import expanduser
-
-import config as peerme_config
-import peerme_db
-import discover
+from peerme import config as peerme_config
+from peerme import peerme_db
+from peerme.commands.check_routing import CheckRoutingCli
+from peerme.commands.discover import DiscoverCli
+from peerme.commands.request import RequestCli
 
 # TODO: Get relative imports working
 # SystemError: Parent module '' not loaded, cannot perform relative import
@@ -23,14 +24,6 @@ import discover
 #)
 
 CLICK_CONTEXT_SETTINGS = {'help_option_names': ('-h', '--help')}
-
-
-class PeermeCmd():
-    ''' Base class for all sub commands to inherit from '''
-
-    def __init__(self, main_opts):
-        ''' Store Global main arguments etc. '''
-        self.opts = main_opts
 
 
 class Options():
@@ -90,7 +83,7 @@ def main(ctx, config, debug):
         TODO: Support API calls in ther future as well as a local DB
     '''
     loop = asyncio.get_event_loop()
-    config_obj = peerme_config.PeermeConfig()
+    config_obj = peerme_config.PeermeConfig(config)
     # TODO: Move Database config to conf file
     db = peerme_db.PeermeDb(loop)
     loop.run_until_complete(db.get_pool())
@@ -100,7 +93,9 @@ def main(ctx, config, debug):
 
 def add_internal_modules():
     ''' Add internal modules to main parser '''
-    main.add_command(discover.DiscoverCli().discover)
+    main.add_command(CheckRoutingCli().check_routing)
+    main.add_command(DiscoverCli().discover)
+    main.add_command(RequestCli().pinder)
 
 
 if __name__ == '__main__':
