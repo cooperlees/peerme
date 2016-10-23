@@ -13,10 +13,11 @@ class Peer():
 
     def __repr__(self):
         base_string = (
-            '<IX: {IX}, ASN: {ASN}, '
+            '<{NAME}: IX: {IX}, ASN: {ASN}, '
             'IPv4: {PEER_IPV4}, IPv4 Limit: {IPV4_LIMIT}, '
             'IPv6: {PEER_IPV6}, IPv6 Limit: {IPV6_LIMIT}>')
         peer_string = base_string.format(
+            NAME=self.name,
             IX=self.ix_desc,
             ASN=self.asn,
             PEER_IPV4=self.peer_ipv4,
