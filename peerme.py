@@ -13,7 +13,6 @@ import time
 from os.path import expanduser
 from peerme import config as peerme_config
 from peerme import peeringdb_mysql
-from peerme import peeringdb_api
 from peerme import euroix_json
 from peerme.commands.check_routing import CheckRoutingCli
 from peerme.commands.generate import GenerateConfigCli
@@ -79,14 +78,19 @@ def _handle_debug(ctx, param, debug):
     callback=_handle_debug,
 )
 @click.option(
+    '--refresh-data',
+    is_flag=True,
+    help='Fetch fresh data from Internet sources (EuroIX only)',
+)
+@click.option(
     '-s',
     '--data-source',
-    help='Choose datasource to get peers from (pdb, euroix)',
+    help='Choose datasource to get peers from (pdbsql, euroix)',
     default='pdbsql'
 )
 
 @click.pass_context
-def main(ctx, config, debug, data_source):
+def main(ctx, config, debug, data_source, refresh_data):
     '''
         Discover and generate potential peering endpoints @ IXs
 
@@ -96,14 +100,14 @@ def main(ctx, config, debug, data_source):
     config_obj = peerme_config.PeermeConfig(config)
     if data_source == 'pdbsql':
         peering_api = peeringdb_mysql.PeermeDb(config_obj, loop)
-    elif data_source == 'euroix':
-        peering_api = euroix_json.PeermeDb(config_obj, loop)
     elif data_source == 'pdbapi':
         peering_api = peeringdb_api.PeermeDb(config_obj, loop)
+    elif data_source == 'euroix':
+        peering_api = euroix_json.PeermeDb(loop, refresh_data)
     else:
         raise Exception('Invalid option "{}" for data source.'.format(
             data_source))
-    # TODO: Move Database config to conf file
+
     # Class to hold all shared options
     ctx.obj = Options(debug, time.time(), peering_api, loop, config_obj)
 
