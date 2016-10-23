@@ -48,7 +48,10 @@ class PeermeDb():
             sys.exit(1)
 
     # TODO: Remove sample function
-    async def execute_query(self, query='SELECT 42;'):
+    async def execute_query(self, query):
+        '''
+        TODO: fix the mysql pool behaviour here.
+        '''
         await self.get_pool()
         async with self.pool.acquire() as conn:
             async with conn.cursor(aiomysql.DictCursor) as cur:

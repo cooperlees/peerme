@@ -1,0 +1,6 @@
+set protocols bgp group external-peers type external
+set protocols bgp group external-peers peer-as 22
+set protocols bgp group external-peers neighbor 10.10.10.2
+set protocols bgp group external-peers neighbor 10.10.10.6
+set protocols bgp group external-peers neighbor 10.10.10.10
+set protocols bgp group external-peers neighbor 10.21.7.2 peer-as 79

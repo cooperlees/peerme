@@ -50,7 +50,7 @@ class GenerateConfig(PeermeCmd):
         self.opts.db.MY_ASN = self.opts.config.config['peerme']['my_asn']
         if dest_asn:
             peers_result = self.opts.loop.run_until_complete(
-                self.opts.db.get_session_by_asn(asn)
+                self.opts.db.get_session_by_asn(dest_asn)
             )
             for peer in peers_result:
                 click.echo(self._template_render(template, peer))
