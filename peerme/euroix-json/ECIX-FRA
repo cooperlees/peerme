@@ -1,0 +1,1744 @@
+{
+    "timestamp": "2016-10-22T12:00:04.442", 
+    "version": "0.5", 
+    "ixp_list": [
+        {
+            "url": "http://www.ecix.net", 
+            "country": "DE", 
+            "shortname": "ECIX-FRA", 
+            "ixp_id": 320
+        }
+    ], 
+    "member_list": [
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.79"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:6181:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 24961, 
+            "name": "myLoc managed IT AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.101"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:f9cd:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 63949, 
+            "name": "Linode LLC"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.94"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 34568, 
+            "name": "ConnectingBytes GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.53"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:5389:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 21385, 
+            "name": "Trusted Network GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.70"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:1f8b:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8075, 
+            "name": "Microsoft Deutschland MCIO GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.72"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:ca8c:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 51852, 
+            "name": "Phase Layer Global Networks LLC."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.30"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:508d:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 20621, 
+            "name": "OPENIT"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.36"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:bd8e:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 48526, 
+            "name": "TANGO S.A."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.43"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:332d:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 13101, 
+            "name": "TNG - The Net Generation AG/Ennit"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.49"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:f10:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 3856, 
+            "name": "PCH Packet Clearing House"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.57"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:3:692:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 198290, 
+            "name": "GITS Global IT Services PSF"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.62"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:8013:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 32787, 
+            "name": "Akamai Technologies"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.100"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:3:1c94:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 203924, 
+            "name": "TelkoData"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.68"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:1a95:0:2"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.69"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:1a95:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 6805, 
+            "name": "Telef\u00f3nica Germany GmbH & Co. OHG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.87"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:bf16:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 48918, 
+            "name": "Globalways AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.42"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:3417:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 13335, 
+            "name": "CloudFlare Inc."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.7"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:7218:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 29208, 
+            "name": "Dial Telecom A.S."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.8"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:50c4:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 20676, 
+            "name": "QSC AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.18"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:1b1b:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 6939, 
+            "name": "Hurricane Electric"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.63"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:a69c:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 42652, 
+            "name": "Inexio KGaA"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.86"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:11e:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 286, 
+            "name": "KPN Eurorings"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.40"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:c5c5:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 50629, 
+            "name": "LWLcom GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.71"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:2170:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8560, 
+            "name": "1&1 Internet AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.21"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:731b:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 29467, 
+            "name": "LUXNETWORK S.A."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.96"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:3:3a4:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 197540, 
+            "name": "netcup GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.99"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:5125:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 20773, 
+            "name": "Host Europe GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.76"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:5926:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 22822, 
+            "name": "Limelight Networks INC"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.11"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:c528:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 50472, 
+            "name": "Chaos Computer Club e.V."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.46"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:229:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 553, 
+            "name": "BelW\u00fc"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.19"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:a2a:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 2602, 
+            "name": "Fondation RESTENA"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.56"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:6347:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 25415, 
+            "name": "ADDIX Internet Services GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.9"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:20ad:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8365, 
+            "name": "MANDA (Metropolitan Area Network Darmstadt)"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.77"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:1aae:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 6830, 
+            "name": "Liberty Global"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.24"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:512f:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 20783, 
+            "name": "pop-interactive GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.59"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:2330:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 9008, 
+            "name": "Visual Online"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.27"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 36040, 
+            "name": "Google Inc."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.54"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:33b5:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 13237, 
+            "name": "euNetworks GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.52"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:e009:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 57353, 
+            "name": "vitroconnect GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.20"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:21b8:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8632, 
+            "name": "Luxembourg Online SA"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.74"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:ad9c:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 44444, 
+            "name": "Forcepoint"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.4"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:31bb:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 12731, 
+            "name": "IPHH Internet Port Hamburg GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.26"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:22bd:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8893, 
+            "name": "Artfiles New Media GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.97"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:c2be:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 49854, 
+            "name": "Rehwork GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.14"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:3b41:0:1"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.16"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:3b41:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 15169, 
+            "name": "Google Inc."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.102"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:3:120d:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 201229, 
+            "name": "DigitalOcean"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.80"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:aa0b:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 43531, 
+            "name": "IX Reach Limited"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.23"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:1a44:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 6724, 
+            "name": "Strato AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.10"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:7966:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 31078, 
+            "name": "Netsign GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.28"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:3e47:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 15943, 
+            "name": "wilhelm.tel GmbH Norderstedt"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.3"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:21c8:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8648, 
+            "name": "KAMP Netzwerkdienste"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.12"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:51cc:0:1"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.75"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:51cc:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 20940, 
+            "name": "Akamai Technologies"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.51"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:2ca:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 714, 
+            "name": "Apple"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.2"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:15cc:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 5580, 
+            "name": "Hibernia Networks"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.81"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:384d:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 14413, 
+            "name": "LinkedIn Europe"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.55"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:c8cd:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 51405, 
+            "name": "voipGATE S.A."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.22"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:ec51:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 60497, 
+            "name": "ICT & Media Services"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.65"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:ef52:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 61266, 
+            "name": "Jehovas Zeugen"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.64"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:71d4:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 29140, 
+            "name": "Hostserver GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.73"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:3d55:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 15701, 
+            "name": "datapath.io"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.29"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:7156:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 29014, 
+            "name": "ScaleUp Technologies GmbH & Co. KG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.38"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:b957:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 47447, 
+            "name": "23Media GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.17"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:bc48:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 48200, 
+            "name": "Opteamax GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.93"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:3:f64:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 200548, 
+            "name": "LiWiNeA GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.35"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:b5a:0:2"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.34"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:b5a:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 2906, 
+            "name": "Netflix"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.66"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:abdc:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 43996, 
+            "name": "Booking.com"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.13"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:315e:0:1"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.58"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:315e:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 12638, 
+            "name": "E-Plus Mobilfunk GmbH & Co. KG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.95"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:3:13e5:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 201701, 
+            "name": "Freifunk Rheinland e.V."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.92"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:5361:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 21345, 
+            "name": "Symantec (Deutschland) GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.85"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:b62:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 2914, 
+            "name": "NTT Europe Ltd."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.78"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:2264:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8804, 
+            "name": "regio.[NET] Upstream GmbH & Co. KG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.44"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:73e6:0:1"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.45"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:73e6:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 29670, 
+            "name": "Individual Network Berlin e.V."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.5"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:20e6:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8422, 
+            "name": "NetCologne"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.67"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:a5e9:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 42473, 
+            "name": "ANEXIA Internetdienstleistungs GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.15"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:616c:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 24940, 
+            "name": "Hetzner Online AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.25"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 35053, 
+            "name": "PHADE Software - PowerWeb"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.90"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:206e:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 8302, 
+            "name": "Zattoo Europa AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.83"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:407d:0:1"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.84"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:407d:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 16509, 
+            "name": "Amazon"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.112"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:70:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 112, 
+            "name": "AS112 Project hosted by IN-Berlin"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.88"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:d361:0:1"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.89"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:d361:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 54113, 
+            "name": "Fastly, Inc."
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.33"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:70cc:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 28876, 
+            "name": "s\u00fcc // dacor GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.37"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:3029:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 12329, 
+            "name": "TMR Telekommunikation Mittleres Ruhrgebiet GmbH"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.60"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:fa:0:1"
+                            }
+                        }
+                    ]
+                }, 
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.61"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:fa:0:2"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 250, 
+            "name": "AS250.net Network Operations"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.91"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:c87c:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 51324, 
+            "name": "EXARING AG"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.48"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:2a:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 42, 
+            "name": "PCH Packet Clearing House"
+        }, 
+        {
+            "connection_list": [
+                {
+                    "ixp_id": 320, 
+                    "vlan_list": [
+                        {
+                            "ipv4": {
+                                "address": "62.69.146.47"
+                            }, 
+                            "ipv6": {
+                                "address": "2001:7f8:8:20:0:3195:0:1"
+                            }
+                        }
+                    ]
+                }
+            ], 
+            "asnum": 12693, 
+            "name": "e.discom Telekommunikation GmbH"
+        }
+    ]
+}
