@@ -1,6 +1,8 @@
 # peerme
 Tool to discover and generate possible peerings between Internet Autonomous Systems
 
+GOAL: Make Peering Great Again!
+
 # Requirements
 * Python >= 3.5
 * pip modules:
