@@ -4,7 +4,6 @@
     Class to take care of discovering potential peers
 '''
 
-#import asyncio
 import click
 import logging
 
@@ -15,34 +14,29 @@ class DiscoverCli():
 
     @click.command()
     @click.option(
-        '-a',
-        '--asn',
-        help='ASN to discover common IXs.'
+        '-d',
+        '--dest-asn',
+        help='Destination ASN for traffic',
     )
-
+    @click.option(
+        '-i',
+        '--dest-ixp',
+        help='Destination IXP for traffic',
+    )
     @click.pass_obj
-    def discover(cli_opts, asn):
+    def discover(cli_opts, dest_asn, dest_ixp):
         ''' All Discovered potential peerings '''
-        DiscoverPeers(cli_opts).run(asn)
+        DiscoverPeers(cli_opts).run(dest_asn, dest_ixp)
 
 
 class DiscoverPeers(PeermeCmd):
 
-    # TODO: Delete
-    async def dbTest(self):
-        sql_data = await self.opts.db.execute_query()
-        print("GOT '{}' from DB".format(sql_data))
-
-    def run(self, asn):
-        click.echo("Time to get some peers discovered - Debug = {}".format(
-            self.opts.debug
-        ))
-
-        click.echo("Config {} = {}".format(self.opts.config.conf_file,
-                                           self.opts.config))
+    def run(self, dest_asn, dest_ixp):
+        #TODO: Support ixp
         self.opts.db.MY_ASN = self.opts.config.config['peerme']['my_asn']
-        if asn:
+        if dest_asn:
             peers_result = self.opts.loop.run_until_complete(
-                self.opts.db.get_session_by_asn(asn))
-        for peer in peers_result:
-            print(peer)
+                self.opts.db.get_session_by_asn(dest_asn)
+            )
+            for peer in peers_result:
+                click.echo(peer)

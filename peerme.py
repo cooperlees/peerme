@@ -14,6 +14,7 @@ from os.path import expanduser
 from peerme import config as peerme_config
 from peerme import peerme_db
 from peerme.commands.check_routing import CheckRoutingCli
+from peerme.commands.generate import GenerateConfigCli
 from peerme.commands.discover import DiscoverCli
 from peerme.commands.request import RequestCli
 
@@ -95,6 +96,7 @@ def add_internal_modules():
     ''' Add internal modules to main parser '''
     main.add_command(CheckRoutingCli().check_routing)
     main.add_command(DiscoverCli().discover)
+    main.add_command(GenerateConfigCli().generate)
     main.add_command(RequestCli().pinder)
 
 
