@@ -66,7 +66,6 @@ class DiscoverPeers(PeermeCmd):
 
 
     def run(self, dest_asn, dest_ixp, json=False):
-        self.opts.db.MY_ASN = self.opts.config.config['peerme']['my_asn']
         if dest_ixp and dest_asn:
             raise NotImplementedError('filtering on both dest_asn and dest_ixp not implemented')
         if dest_asn:
