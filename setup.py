@@ -51,6 +51,8 @@ setup(name='peerme',
           'Development Status :: 3 - Alpha',
       ],
       install_requires=[
+          'aiohttp',
+          'jinja2',
           'aiomysql >= 0.0.9 ',
           'click >= 5.0',
       ])
