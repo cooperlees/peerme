@@ -14,7 +14,6 @@ import asyncio
 from . import peer
 
 class PeermeDb():
-    MY_ASN = 32934
     BASE_PATH = 'peerme/euroix-json/'
     #this gets JSON files from IXP and save it with proper names
     def __init__(self, loop=None):
@@ -122,8 +121,9 @@ class PeermeDb():
 
     # gives the list of sessions you could establish with asn
     # if my_asn is provided, it will only return the list of sessions on IXP you have in common
-    async def get_session_by_asn(self, asn, my_asn=None):
+    async def get_session_by_asn(self, asn):
         my_asn = self.MY_ASN
+        print(my_asn)
         peers_list = []
         file_list = glob.glob(self.BASE_PATH + "*")
         #load all files in order to seek on all IXP

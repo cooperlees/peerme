@@ -13,6 +13,7 @@ import time
 from os.path import expanduser
 from peerme import config as peerme_config
 from peerme import peeringdb_mysql
+from peerme import peeringdb_api
 from peerme import euroix_json
 from peerme.commands.check_routing import CheckRoutingCli
 from peerme.commands.generate import GenerateConfigCli
@@ -81,7 +82,7 @@ def _handle_debug(ctx, param, debug):
     '-s',
     '--data-source',
     help='Choose datasource to get peers from (pdb, euroix)',
-    default='pdb'
+    default='pdbsql'
 )
 
 @click.pass_context
@@ -93,10 +94,12 @@ def main(ctx, config, debug, data_source):
     '''
     loop = asyncio.get_event_loop()
     config_obj = peerme_config.PeermeConfig(config)
-    if data_source == 'pdb':
+    if data_source == 'pdbsql':
         peering_api = peeringdb_mysql.PeermeDb(loop)
     elif data_source == 'euroix':
         peering_api = euroix_json.PeermeDb(loop)
+    elif data_source == 'pdbapi':
+        peering_api = peeringdb_api.PeermeDb(loop)
     else:
         sys.exit("NO VALID OPTIONS FOR ")
     # TODO: Move Database config to conf file
