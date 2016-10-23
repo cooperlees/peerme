@@ -12,9 +12,6 @@ import glob
 
 from peer import Peer
 
-debug = False
-
-
 #this gets JSON files from IXP and save it with proper names
 def fetch_json( file ):
 	
@@ -27,7 +24,6 @@ def fetch_json( file ):
 		response = urllib.request.urlopen(url)
 		data = response.read()
 		ixp = json.loads(data.decode('utf-8'))
-		if debug: print("shortname = " + ixp['ixp_list'][0]['shortname'])
 		#strip everyting after the first space
 		file_name = re.sub(' .*$', '', ixp['ixp_list'][0]['shortname'])
 		#little evil hach....
@@ -38,52 +34,57 @@ def fetch_json( file ):
 	return
 
 
-
-def list_files():
+#gives all the sessions on all the IXP we have
+def session_on_all_ixp():
+	full_peers_list = []
 	file_list = glob.glob("euroix-json/*")
 	for filename in file_list:
-		if debug: print(filename)
 		#stripping foler name
 		filename = re.sub('^.*\/', '', filename)
-		if debug: print(filename)
+		#get the list per IXP and merge it
 		peers_list = session_by_ix(filename)
-		for peer in peers_list: print(peer.ix_desc,peer.asn,peer.peer_ipv4,peer.peer_ipv6, peer.prefix_limit_v4, peer.prefix_limit_v6, peer.as_set_v4, peer.as_set_v6)
+		for peer in peers_list:
+			full_peers_list.append(peer)
+	return full_peers_list	
 
-
-def session_by_ix( IX_name ):
+# gives the list of sessions you could establish on an IXP
+# if my_asn is provided, it will remove it from the list
+def session_by_ix( IX_name, my_asn=None ):
 	peers_list = [ ]
+	#open the file for the givent IXP
 	with open('euroix-json/'+IX_name, 'r') as f:
 		data = json.load(f)
-		#pprint(data)
+		#there can be several IXP in one file (AMS-IX HK, Chicago, etc...)
 		for ixp in data['ixp_list']:
 			try:
+				# name is not mandarory, shortname is
 				ixp["name"]
 			except KeyError:
 				ixp_name = ixp["shortname"]
 			else:
 				ixp_name = ixp["name"]
-			print(ixp_name + " : " + str(ixp["ixp_id"]))
 			
 			for member in data['member_list']:
+				#a member can have several connections on the same IXP/LAN
 				for connection in member["connection_list"]:
 					my_peer = Peer()
+					#my_peer.ix_desc = ixp_name
 					my_peer.ix_desc = ixp["shortname"]
+					#connection_list list connections for all IXP in the file...
 					if ixp["ixp_id"] == connection["ixp_id"]:
-						if debug: print(member["asnum"])
 						my_peer.asn = member["asnum"]
+						my_peer.name = member["name"]
 						try: 
 							for vlan in connection["vlan_list"]:
 								my_peer.peer_ipv4 = vlan["ipv4"]["address"]
 								my_peer.peer_ipv6 = vlan["ipv6"]["address"]
 								for inetF in ["ipv4", "ipv6"]:
-									if debug: print(vlan[inetF]["address"])
 									for optionals in ["max_prefix", "as_macro"]:
 										try: 
 											vlan[inetF][optionals]
 										except KeyError:
 											 pass
 										else: 
-											if debug: print(vlan[inetF][optionals])
 											if inetF == "ipv4" and optionals == "max_prefix": my_peer.prefix_limit_v4 = vlan[inetF][optionals]
 											if inetF == "ipv6" and optionals == "max_prefix": my_peer.prefix_limit_v6 = vlan[inetF][optionals]
 											if inetF == "ipv4" and optionals == "as_macro": my_peer.as_set_v4 = vlan[inetF][optionals]
@@ -91,33 +92,58 @@ def session_by_ix( IX_name ):
 						except KeyError:
 							 pass
 						except TypeError:
-							#if debug: print("AMS-IX Crappy!")
 							try: 
+								#this case is due to AMS-IX not properly using vlan_list yet
 								my_peer.peer_ipv4 = connection["vlan_list"]["ipv4"]["address"]
 								my_peer.peer_ipv6 = connection["vlan_list"]["ipv6"]["address"]
 								for inetF in ["ipv4", "ipv6"]:
-									if debug: print(connection["vlan_list"][inetF]["address"])
 									for optionals in ["max_prefix", "as_macro"]:
 										try: 
 											connection["vlan_list"][inetF][optionals]
 										except KeyError:
 											 pass
 										else: 
-											if debug: print(vlan[inetF][optionals])
 											if inetF == "ipv4" and optionals == "max_prefix": my_peer.prefix_limit_v4 = connection["vlan_list"][inetF][optionals]
 											if inetF == "ipv6" and optionals == "max_prefix": my_peer.prefix_limit_v6 = connection["vlan_list"][inetF][optionals]
 											if inetF == "ipv4" and optionals == "as_macro": my_peer.as_set_v4 = connection["vlan_list"][inetF][optionals]
 											if inetF == "ipv6" and optionals == "as_macro": my_peer.as_set_v6 = connection["vlan_list"][inetF][optionals]
 							except KeyError:
 								pass
-						peers_list.append( my_peer )
-						#peer = my_peer
-						#print(peer.ix_desc,peer.asn,peer.peer_ipv4,peer.peer_ipv6)
+						#special case if my_asn is declared (don't add it to the list)
+						if (my_asn is None) or (my_asn != my_peer.asn ):
+							peers_list.append( my_peer )
+	return peers_list
+
+# gives the list of sessions you could establish with asn
+# if my_asn is provided, it will only return the list of sessions on IXP you have in common
+def session_by_asn(asn, my_asn=None):
+	peers_list = [ ]
+	file_list = glob.glob("euroix-json/*")
+	#load all files in order to seek on all IXP
+	for filename in file_list:
+		#stripping foler name
+		filename = re.sub('^.*\/', '', filename)
+		ixp_peers_list = session_by_ix(filename)
+		#we seek on the peers_list if my_asn is present
+		present = False
+		for peer in ixp_peers_list:
+			if peer.asn == my_asn:
+				present = True
+		for peer in ixp_peers_list:
+			if peer.asn == asn:
+				#add peer to peers_list if my_asn in not define OR my_asn is present
+				if (my_asn is not None and present) or my_asn is None:
+					peers_list.append( peer )
 	return peers_list
 
 
-#this is use to fill the forder with JSON
+#############
+
+##this is use to fill the forder with JSON
 #fetch_json('euroix-list.json')
-list_files()
-#peers_list = session_by_ix("FranceIX-MRS")
-#for peer in peers_list: print(peer.ix_desc,peer.asn,peer.peer_ipv4,peer.peer_ipv6, peer.prefix_limit_v4, peer.prefix_limit_v6, peer.as_set_v4, peer.as_set_v6)
+#peers_list = session_on_all_ixp()
+#peers_list = session_by_ix("FranceIX-MRS") #the list of peers for FranceIX-MRS
+#peers_list = session_by_ix("FranceIX-MRS", 8218) #the list of peers for FranceIX-MRS without 8218
+#peers_list = session_by_asn(15169) #the list of all sessions of Google
+#peers_list = session_by_asn(15169, 32934) #the list of all sessions of Google where Facebook is present on the IXP
+#for peer in peers_list: print(peer.ix_desc, peer.name, peer.asn, peer.peer_ipv4, peer.peer_ipv6, peer.prefix_limit_v4, peer.prefix_limit_v6, peer.as_set_v4, peer.as_set_v6)
