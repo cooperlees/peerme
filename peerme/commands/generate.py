@@ -48,7 +48,7 @@ class GenerateConfig(PeermeCmd):
 
     def _template_render(self, template, peer):
         ''' Get Data and render the template '''
-        env = Environment(loader=PackageLoader('peerme', '../templates'))
+        env = Environment(loader=PackageLoader('peerme', 'templates'))
         template = env.get_template(template)
         return template.render(
             my_asn=self.opts.config.config['peerme']['my_asn'],
