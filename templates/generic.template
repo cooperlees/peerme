@@ -1,8 +1,8 @@
 PEER_ASN: {{peer.asn}}
 PEER_NAME: {{peer.name}}
 IX_DESC: {{peer.ix_desc}}
-PEER_IPV4: {{peer.peer_ipv4}}
-PEER_IPV6: {{peer.peer_ipv6}}
-PEER_LIMIT_IPV4: {{peer.prefix_limit_v4}}
-PEER_LIMIT_IPV6: {{peer.prefix_limit_v6}}
+{% if peer.peer_ipv4 %}PEER_IPV4: {{peer.peer_ipv4}}{% else %}PEER_IPV4: _None_{% endif %}
+{% if peer.peer_ipv6 %}PEER_IPV6: {{peer.peer_ipv6}}{% else %}PEER_IPV6: _None_{% endif %}
+{% if peer.prefix_limit_v4 %}PEER_LIMIT_IPV4: {{peer.prefix_limit_v4}}{% else %}PEER_LIMIT_IPV4: _None_{% endif %}
+{% if peer.prefix_limit_v6 %}PEER_LIMIT_IPV6: {{peer.prefix_limit_v6}}{% else %}PEER_LIMIT_IPV6: _None_{% endif %}
 ==========================================

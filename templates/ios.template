@@ -1,15 +1,19 @@
-router bgp 32934
-  address-family ipv4
-    neighbor {{peer.peer_ipv4}} description {{peer.name}}
-    neighbor {{peer.peer_ipv4}} peer-as {{peer.asn}}
+router bgp {{my_asn}}
+{% if peer.peer_ipv4 %}  address-family ipv4
+    neighbor {{peer.peer_ipv4}} description {{peer.name}} at {{peer.ix_desc}}
+    neighbor {{peer.peer_ipv4}} remote-as {{peer.asn}}
     neighbor {{peer.peer_ipv4}} route-map IX-PEER in
     neighbor {{peer.peer_ipv4}} route-map IX-PEER out
-    neighbor {{peer.peer_ipv4}} prefix-limit {{peer.prefix_limit_v4}}
-    neighbor {{peer.peer_ipv4}} activate
-  address-family ipv6
-    neighbor {{peer.peer_ipv6}} description {{peer.name}}
-    neighbor {{peer.peer_ipv6}} peer-as {{peer.asn}}
+    neighbor {{peer.peer_ipv4}} prefix-list PFX-IXv4-OUT out
+    neighbor {{peer.peer_ipv4}} maximum-prefix {{peer.prefix_limit_v4}}
+    neighbor {{peer.peer_ipv4}} activate{% endif %}
+{% if peer.peer_ipv6 %}    no neighbor {{peer.peer_ipv6}} activate
+    address-family ipv6
+    neighbor {{peer.peer_ipv6}} description {{peer.name}} at {{peer.ix_desc}}
+    neighbor {{peer.peer_ipv6}} remote-as {{peer.asn}}
     neighbor {{peer.peer_ipv6}} route-map IXv6-PEER in
     neighbor {{peer.peer_ipv6}} route-map IXv6-PEER out
-    neighbor {{peer.peer_ipv6}} prefix-limit {{peer.prefix_limit_v6}}
+    neighbor {{peer.peer_ipv6}} prefix-list PFX-IXv6-OUT out
+    neighbor {{peer.peer_ipv6}} maximum-prefix {{peer.prefix_limit_v6}}
     neighbor {{peer.peer_ipv6}} activate
+{% endif %}

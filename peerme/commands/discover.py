@@ -66,15 +66,17 @@ class DiscoverPeers(PeermeCmd):
 
 
     def run(self, dest_asn, dest_ixp, json=False):
-        #TODO: Support ixp
         self.opts.db.MY_ASN = self.opts.config.config['peerme']['my_asn']
-        if not dest_asn:
-            logging.error('No dest ASN. Exiting')
-            return 69
-
-        peers_result = self.opts.loop.run_until_complete(
-            self.opts.db.get_session_by_asn(dest_asn)
-        )
+        if dest_ixp and dest_asn:
+            raise NotImplementedError('filtering on both dest_asn and dest_ixp not implemented')
+        if dest_asn:
+            peers_result = self.opts.loop.run_until_complete(
+                self.opts.db.get_session_by_asn(dest_asn)
+            )
+        if dest_ixp:
+            peers_result = self.opts.loop.run_until_complete(
+                self.opts.db.get_session_by_ix(dest_ixp)
+            )
         if json:
             self._json_output(peers_result)
         else:
