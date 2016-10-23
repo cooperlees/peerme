@@ -11,8 +11,9 @@ import ipaddress
 from . import peer
 
 class PeeringDB():
-    def __init__(self, loop=None):
+    def __init__(self, config, loop=None):
         self.loop = loop if loop else asyncio.get_event_loop()
+        self.global_config = config.config
 
     def validate_ip_address(self, address, af=6):
         if af == 4:
@@ -48,7 +49,8 @@ class PeeringDB():
         '''
         peers = []
         peer_fids = await self.get_fid_asn(asn)
-        my_fids = await self.get_fid_asn(self.MY_ASN)
+        my_fids = await self.get_fid_asn(
+            self.global_config['peerme']['my_asn'])
         common_fids = list(set(my_fids) & set(peer_fids))
         peer_name = await self.get_peername_by_asn(asn)
         prefix_limit_v4, prefix_limit_v6 = await self.get_prefixlimits_by_asn(asn)
@@ -69,5 +71,6 @@ class PeeringDB():
                 peers.append(this_peer)
         return peers
 
-    async def get_session_by_ix(self, ipv4_subnet):
+    async def get_session_by_ix(self, ix_name):
+        
         raise NotImplementedError('get_session_by_ix not supported')

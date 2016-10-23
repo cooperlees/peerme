@@ -14,23 +14,19 @@ from pymysql import err as pymysql_err
 from . import peeringdb
 
 class PeermeDb(peeringdb.PeeringDB):
-
-    # TODO: Move to Config File
-    HOST = 'localhost'
-    USER = 'peeringdb'
-    PASS = 'l33tasbr0'
-    PORT = 3306
-    DATABASE = 'peeringdb'
-    MY_ASN = 32934
-
     async def get_pool(self):
         try:
+            HOST = self.global_config['peeringdb_mysql']['host']
+            USER = self.global_config['peeringdb_mysql']['user']
+            PASS = self.global_config['peeringdb_mysql']['pass']
+            PORT = int(self.global_config['peeringdb_mysql']['port'])
+            DATABASE = self.global_config['peeringdb_mysql']['database']
             self.pool = await aiomysql.create_pool(
-                host=self.HOST,
-                port=self.PORT,
-                user=self.USER,
-                password=self.PASS,
-                db=self.DATABASE,
+                host=HOST,
+                port=PORT,
+                user=USER,
+                password=PASS,
+                db=DATABASE,
                 loop=self.loop,
             )
         except pymysql_err.OperationalError as pmye:

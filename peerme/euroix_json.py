@@ -4,43 +4,90 @@
     Where we make the things for EuroIX JSON
 '''
 
-import json
-import urllib.request
-from pprint import pprint
-import re
-import glob
+import aiohttp
 import asyncio
+import async_timeout
+import glob
+import json
+import logging
+import re
+import time
 
 from . import peer
 
 class PeermeDb():
-    BASE_PATH = 'peerme/euroix-json/'
+    '''
+        Replaces talking to the Peering DB and generates output based on
+        EuroIX JSON data
+
+        We HTTP download the data and cache locally
+    '''
+
+    MY_ASN = 32934
     #this gets JSON files from IXP and save it with proper names
-    def __init__(self, loop=None):
+    BASE_PATH = 'peerme/euroix-json/'
+
+    def __init__(self, loop=None, refresh_data=False):
         self.loop = loop if loop else asyncio.get_event_loop()
+        if refresh_data:
+            self.fetch_json('peerme/euroix-list.json')
 
-    def fetch_json(self, file):
-        with open(file, 'r') as f:
-            data = json.load(f)
+    async def _get_via_http(self, url, timeout=10):
+        ''' async JSON fetching coro '''
+        try:
+            async with aiohttp.ClientSession(loop=self.loop) as session:
+                with async_timeout.timeout(timeout):
+                    async with session.get(url) as response:
+                        data = await response.text()
+        except Exception as e:
+            logging.error("{} unable to be fetched: {}".format(
+                url, str(e)), exc_info=True,
+            )
+            data = None
 
-        for url in data:
-            print("url = "+url)
-            #urllib.request.urlretrieve(url, "euroix-json/file_name")
-            response = urllib.request.urlopen(url)
-            data = response.read()
-            ixp = json.loads(data.decode('utf-8'))
-            #strip everyting after the first space
+        return url, data
+
+    def fetch_json(self, ixp_json_file, timeout=10):
+        async_json_fetch_start = time.time()
+        with open(ixp_json_file, 'r') as f:
+            ixp_data_urls = json.load(f)
+        logging.info("Refreshing {} IXP JSON Datasets".format(
+            len(ixp_data_urls)
+        ))
+
+        http_tasks = [
+            asyncio.ensure_future(
+                self._get_via_http(url)
+            ) for url in ixp_data_urls
+        ]
+        completed_tasks, _ = self.loop.run_until_complete(
+            asyncio.wait(http_tasks, timeout=10)
+        )
+
+        for task in completed_tasks:
+            url, data = task.result()
+
+            if not data:
+                continue
+
+            logging.debug("Writing {} to disk".format(url))
+            ixp = json.loads(data)
+            # Strip everyting after the first space
             file_name = re.sub(' .*$', '', ixp['ixp_list'][0]['shortname'])
-            #little evil hach....
+
+            # Make London Great Again - Hack
             if file_name == "London":
                 file_name = "LINX"
-            with open(self.BASE_PATH + file_name, 'wb') as out_file:
+
+            # TODO: Lets do smarter caching and in memory storage + be atomic
+            with open(self.BASE_PATH + file_name, 'w') as out_file:
                 out_file.write(data)
-        return
 
+        fetch_time = time.time() - async_json_fetch_start
+        logging.debug("HTTP JSON data fetch took {} seconds".format(fetch_time))
 
-    #gives all the sessions on all the IXP we have
     def session_on_all_ixp(self):
+        ''' Gives all the sessions on all the IXP we have '''
         full_peers_list = []
         file_list = glob.glob(self.BASE_PATH + "*")
         for filename in file_list:
@@ -56,7 +103,7 @@ class PeermeDb():
     # if my_asn is provided, it will remove it from the list
     async def get_session_by_ix(self, IX_name, my_asn=None):
         my_asn = self.MY_ASN
-        peers_list = [ ]
+        peers_list = []
         #open the file for the givent IXP
         with open(self.BASE_PATH + IX_name, 'r') as f:
             data = json.load(f)
@@ -103,6 +150,7 @@ class PeermeDb():
                                  pass
                             except TypeError:
                                 try:
+                                    #this case is due to AMS-IX not properly using vlan_list yet
                                     my_peer.peer_ipv4 = connection["vlan_list"]["ipv4"]["address"]
                                     my_peer.peer_ipv6 = connection["vlan_list"]["ipv6"]["address"]
                                     for inetF in ["ipv4", "ipv6"]:
@@ -127,7 +175,6 @@ class PeermeDb():
     # if my_asn is provided, it will only return the list of sessions on IXP you have in common
     async def get_session_by_asn(self, asn):
         my_asn = self.MY_ASN
-        print(my_asn)
         peers_list = []
         file_list = glob.glob(self.BASE_PATH + "*")
         #load all files in order to seek on all IXP
