@@ -7,6 +7,7 @@
 
 import click
 import logging
+import sys
 
 from .cli_common import PeermeCmd
 
@@ -35,6 +36,11 @@ class GenerateConfigCli():
     @click.pass_obj
     def generate(cli_opts, dest_asn, dest_ixp, template):
         ''' Generate rendered templates using the found peerings '''
+
+        if not template:
+            logging.error("Please specify a template (-t)")
+            sys.exit(1)
+
         GenerateConfig(cli_opts).run(dest_asn, dest_ixp, template)
 
 
