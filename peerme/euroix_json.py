@@ -83,7 +83,11 @@ class PeermeDb():
                             try:
                                 for vlan in connection["vlan_list"]:
                                     my_peer.peer_ipv4 = vlan["ipv4"]["address"]
-                                    my_peer.peer_ipv6 = vlan["ipv6"]["address"]
+                                    try:
+                                        my_peer.peer_ipv6 = vlan["ipv6"]["address"]
+                                    except KeyError:
+                                        #because LINX has problem with IPv6
+                                        my_peer.peer_ipv6 = ''
                                     for inetF in ["ipv4", "ipv6"]:
                                         for optionals in ["max_prefix", "as_macro"]:
                                             try:
@@ -99,7 +103,6 @@ class PeermeDb():
                                  pass
                             except TypeError:
                                 try:
-                                    #this case is due to AMS-IX not properly using vlan_list yet
                                     my_peer.peer_ipv4 = connection["vlan_list"]["ipv4"]["address"]
                                     my_peer.peer_ipv6 = connection["vlan_list"]["ipv6"]["address"]
                                     for inetF in ["ipv4", "ipv6"]:
