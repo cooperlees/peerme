@@ -1,6 +1,14 @@
-set protocols bgp group external-peers type external
-set protocols bgp group external-peers peer-as 22
-set protocols bgp group external-peers neighbor 10.10.10.2
-set protocols bgp group external-peers neighbor 10.10.10.6
-set protocols bgp group external-peers neighbor 10.10.10.10
-set protocols bgp group external-peers neighbor 10.21.7.2 peer-as 79
+set routing-options autonomous-system {{my_asn}}
+{% if peer.peer_ipv4 %}set protocols bgp group external-peers-v4 family inet
+set protocols bgp group external-peers-v4 type external
+set protocols bgp group external-peers-v4 export peer-export-v4
+set protocols bgp group external-peers-v4 neighbor {{peer.peer_ipv4}} peer-as {{peer.asn}}
+set protocols bgp group external-peers-v4 neighbor prefix-limit {{peer.prefix_limit_v4}}
+set protocols bgp group external-peers-v4 neighbor {{peer.peer_ipv4}} description "{{peer.name}} at {{peer.ix_desc}}"{% endif %}{% if peer.peer_ipv6 %}
+set protocols bgp group external-peers-v6 family inet6
+set protocols bgp group external-peers-v6 type external
+set protocols bgp group external-peers-v6 export peer-export-v6
+set protocols bgp group external-peers-v6 neighbor {{peer.peer_ipv6}} peer-as {{peer.asn}}
+set protocols bgp group external-peers-v6 neighbor prefix-limit {{peer.prefix_limit_v6}}
+set protocols bgp group external-peers-v6 neighbor 2001:db8:0:4:2a0:a502:0:15da description "{{peer.name}} at {{peer.ix_desc}}"{% endif %}
+
