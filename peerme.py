@@ -13,6 +13,7 @@ import time
 from os.path import expanduser
 from peerme import config as peerme_config
 from peerme import peeringdb_mysql
+from peerme import peeringdb_api
 from peerme import euroix_json
 from peerme.commands.generate import GenerateConfigCli
 from peerme.commands.discover import DiscoverCli
@@ -97,7 +98,8 @@ def main(ctx, config, debug, data_source, refresh_data):
     elif data_source == 'pdbapi':
         peering_api = peeringdb_api.PeermeDb(config_obj, loop)
     elif data_source == 'euroix':
-        peering_api = euroix_json.PeermeDb(loop, refresh_data)
+        peering_api = euroix_json.PeermeDb(
+            config_obj, refresh_data, loop)
     else:
         raise Exception('Invalid option "{}" for data source.'.format(
             data_source))

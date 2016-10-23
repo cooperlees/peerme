@@ -55,7 +55,6 @@ class GenerateConfig(PeermeCmd):
             peer=peer)
 
     def run(self, dest_asn, dest_ixp, template):
-        self.opts.db.MY_ASN = self.opts.config.config['peerme']['my_asn']
         if dest_asn:
             peers_result = self.opts.loop.run_until_complete(
                 self.opts.db.get_session_by_asn(dest_asn)

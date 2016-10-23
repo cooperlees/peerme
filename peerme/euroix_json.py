@@ -23,14 +23,14 @@ class PeermeDb():
         We HTTP download the data and cache locally
     '''
 
-    MY_ASN = 32934
     #this gets JSON files from IXP and save it with proper names
     BASE_PATH = 'peerme/euroix-json/'
 
-    def __init__(self, loop=None, refresh_data=False):
+    def __init__(self, config, refresh_data=False, loop=None):
         self.loop = loop if loop else asyncio.get_event_loop()
         if refresh_data:
             self.fetch_json('peerme/euroix-list.json')
+        self.global_config = config.config
 
     async def _get_via_http(self, url, timeout=10):
         ''' async JSON fetching coro '''
@@ -102,7 +102,7 @@ class PeermeDb():
     # gives the list of sessions you could establish on an IXP
     # if my_asn is provided, it will remove it from the list
     async def get_session_by_ix(self, IX_name, my_asn=None):
-        my_asn = self.MY_ASN
+        my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         #open the file for the givent IXP
         with open(self.BASE_PATH + IX_name, 'r') as f:
@@ -174,7 +174,7 @@ class PeermeDb():
     # gives the list of sessions you could establish with asn
     # if my_asn is provided, it will only return the list of sessions on IXP you have in common
     async def get_session_by_asn(self, asn):
-        my_asn = self.MY_ASN
+        my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         file_list = glob.glob(self.BASE_PATH + "*")
         #load all files in order to seek on all IXP
