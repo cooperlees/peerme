@@ -1,9 +1,9 @@
-import asyncio
-import logging
-import aiohttp
-import json
+#!/usr/bin/env python3
 
-import concurrent.futures
+import aiohttp
+import asyncio
+import json
+import logging
 import sys
 
 from . import peeringdb
