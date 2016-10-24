@@ -10,6 +10,7 @@ import async_timeout
 import glob
 import json
 import logging
+import os
 import re
 import time
 
@@ -27,16 +28,17 @@ class PeermeDb():
     BASE_PATH = 'peerme/euroix-json/'
 
     def __init__(self, config, refresh_data=False, loop=None):
+        self.global_config = config.config
+        self.HTTP_TIMEOUT = int(self.global_config['peerme']['http_timeout'])
         self.loop = loop if loop else asyncio.get_event_loop()
         if refresh_data:
             self.fetch_json('peerme/euroix-list.json')
-        self.global_config = config.config
 
-    async def _get_via_http(self, url, timeout=10):
+    async def _get_via_http(self, url):
         ''' async JSON fetching coro '''
         try:
             async with aiohttp.ClientSession(loop=self.loop) as session:
-                with async_timeout.timeout(timeout):
+                with async_timeout.timeout(self.HTTP_TIMEOUT):
                     async with session.get(url) as response:
                         data = await response.text()
         except Exception as e:
@@ -47,7 +49,11 @@ class PeermeDb():
 
         return url, data
 
-    def fetch_json(self, ixp_json_file, timeout=10):
+    def _create_base_path(self):
+        if not os.path.exists(self.BASE_PATH):
+            os.mkdir(self.BASE_PATH)
+
+    def fetch_json(self, ixp_json_file):
         async_json_fetch_start = time.time()
         with open(ixp_json_file, 'r') as f:
             ixp_data_urls = json.load(f)
@@ -61,15 +67,13 @@ class PeermeDb():
             ) for url in ixp_data_urls
         ]
         completed_tasks, _ = self.loop.run_until_complete(
-            asyncio.wait(http_tasks, timeout=10)
+            asyncio.wait(http_tasks, timeout=self.HTTP_TIMEOUT)
         )
 
         for task in completed_tasks:
             url, data = task.result()
-
             if not data:
                 continue
-
             logging.debug("Writing {} to disk".format(url))
             ixp = json.loads(data)
             # Strip everyting after the first space
@@ -78,6 +82,9 @@ class PeermeDb():
             # Make London Great Again - Hack
             if file_name == "London":
                 file_name = "LINX"
+
+            # Ensure we have
+            self._create_base_path()
 
             # TODO: Lets do smarter caching and in memory storage + be atomic
             with open(self.BASE_PATH + file_name, 'w') as out_file:
@@ -99,11 +106,17 @@ class PeermeDb():
                 full_peers_list.append(peer)
         return full_peers_list
 
+<<<<<<< HEAD
     async def get_session_by_ix(self, ix_name, dest_asn=None):
         '''
         gives the list of sessions you could establish on an IXP
         if dest_asn is provided, it will only return peer information for that one
         '''
+=======
+    # gives the list of sessions you could establish on an IXP
+    # if my_asn is provided, it will remove it from the list
+    async def get_session_by_ix(self, ix_name, my_asn=None):
+>>>>>>> cooperlees/master
         my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         #open the file for the givent IXP
@@ -113,13 +126,18 @@ class PeermeDb():
             for ixp in data['ixp_list']:
                 try:
                     # name is not mandarory, shortname is
-                    ixp["name"]
+                    ixp_name = ixp["name"]
                 except KeyError:
                     ixp_name = ixp["shortname"]
-                else:
-                    ixp_name = ixp["name"]
-
                 for member in data['member_list']:
+                    if not member:
+                        logging.debug('Empty member on: {}'.format(ixp_name))
+                        continue
+                    if 'connection_list' not in member:
+                        logging.debug(
+                            'Member doens\'t have any connections:'
+                            ' {} {}'.format(ixp_name, member))
+                        continue
                     #a member can have several connections on the same IXP/LAN
                     for connection in member["connection_list"]:
                         my_peer = peer.Peer()

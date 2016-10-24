@@ -80,8 +80,8 @@ def _handle_debug(ctx, param, debug):
 @click.option(
     '-s',
     '--data-source',
-    help='Choose datasource to get peers from (pdbsql, euroix)',
-    default='pdbsql'
+    help='Choose Peering datasource (pdbapi [default], pdbsql, euroix)',
+    default='pdbapi'
 )
 
 @click.pass_context
@@ -99,7 +99,8 @@ def main(ctx, config, debug, data_source, refresh_data):
         peering_api = peeringdb_api.PeermeDb(config_obj, loop)
     elif data_source == 'euroix':
         peering_api = euroix_json.PeermeDb(
-            config_obj, refresh_data, loop)
+            config_obj, refresh_data, loop
+        )
     else:
         raise Exception('Invalid option "{}" for data source.'.format(
             data_source))

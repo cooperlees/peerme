@@ -5,14 +5,18 @@ GOAL: Make Peering Great Again!
 
 ```
 "peerme discover" gives a list of IP and IXP you have in common with a specified ASN.
+<<<<<<< HEAD
 "peerme genetate" make the configuration from a template.
 ```
+=======
+"peerme generate" make the configuration from a template.
+>>>>>>> cooperlees/master
 
 # Requirements
 * Python >= 3.5
 * pip modules:
     * aiomysql: https://github.com/aio-libs/aiomysql
-  * (if not useing PeeringDB API)
+  * (if not using PeeringDB API)
   * aiohttp: http://aiohttp.readthedocs.io/
   * click: http://click.pocoo.org/
   * jinja2: http://jinja.pocoo.org/

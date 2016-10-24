@@ -1,14 +1,26 @@
+#!/usr/bin/env ptyhon3
 
-import asyncio
-import logging
 import aiohttp
-import json
-
-import concurrent.futures
-import sys
+import asyncio
 import ipaddress
+import logging
+import json
+import sys
 
 from . import peer
+
+
+class RestAPIException(Exception):
+    ''' Exception to handle HTTP errors '''
+    def __init__(self, endpoint, query, http_code):
+        self.endpoint = endpoint
+        self.query = query
+        self.full_query = '{}/{}'.format(endpoint, query)
+        self.http_code = http_code
+
+    def __repr__(self):
+        return '{} returned {}'.format(self.full_query, self.http_code)
+
 
 class PeeringDB():
     def __init__(self, config, loop=None):
@@ -41,22 +53,32 @@ class PeeringDB():
         - data:
         -- get prefix limits
         -- get as-set data
-        - performance:
-        -- these queries can be improved a lot, or we do better queries
         There are some edge cases we miss here (possibly more):
         - We only look for the ASN if there are multiple ASNs we only find
             the one provided
         '''
+        peerdb_tasks = []
         peers = []
+
+        try:
+            peer_name = await self.get_peername_by_asn(asn)
+        except RestAPIException as apie:
+            # If the ASN does not exist no point running
+            sys.exit(2)
+
+        # Potential AsyncIO Tasks
         peer_fids = await self.get_fid_asn(asn)
+        prefix_limit_v4, prefix_limit_v6 = await self.get_prefixlimits_by_asn(asn)
         my_fids = await self.get_fid_asn(
             self.global_config['peerme']['my_asn'])
+
         common_fids = list(set(my_fids) & set(peer_fids))
-        peer_name = await self.get_peername_by_asn(asn)
-        prefix_limit_v4, prefix_limit_v6 = await self.get_prefixlimits_by_asn(asn)
         for fid in common_fids:
+
+            # Batch these two for each loop iteration
             ips_in_fid = await self.get_ips_by_asn_fid(asn, fid)
             fidname = await self.get_fidname_by_fid(fid)
+
             for ip in ips_in_fid:
                 this_peer = peer.Peer()
                 this_peer.asn = asn
@@ -72,5 +94,5 @@ class PeeringDB():
         return peers
 
     async def get_session_by_ix(self, ix_name):
-        
+
         raise NotImplementedError('get_session_by_ix not supported')

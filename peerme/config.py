@@ -27,7 +27,9 @@ class PeermeConfig():
         self.conf_file = 'default'
         self.config['peerme'] = {
             'my_asn': 32934,
+            'http_timeout': 30
         }
+
 
     def __repr__(self):
         output = ''
