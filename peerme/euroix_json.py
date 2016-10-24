@@ -99,13 +99,15 @@ class PeermeDb():
                 full_peers_list.append(peer)
         return full_peers_list
 
-    # gives the list of sessions you could establish on an IXP
-    # if my_asn is provided, it will remove it from the list
-    async def get_session_by_ix(self, IX_name, my_asn=None):
+    async def get_session_by_ix(self, ix_name, dest_asn=None):
+        '''
+        gives the list of sessions you could establish on an IXP
+        if dest_asn is provided, it will only return peer information for that one
+        '''
         my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         #open the file for the givent IXP
-        with open(self.BASE_PATH + IX_name, 'r') as f:
+        with open(self.BASE_PATH + ix_name, 'r') as f:
             data = json.load(f)
             #there can be several IXP in one file (AMS-IX HK, Chicago, etc...)
             for ixp in data['ixp_list']:
@@ -166,9 +168,14 @@ class PeermeDb():
                                                 if inetF == "ipv6" and optionals == "as_macro": my_peer.as_set_v6 = connection["vlan_list"][inetF][optionals]
                                 except KeyError:
                                     pass
-                            #special case if my_asn is declared (don't add it to the list)
-                            if (my_asn is None) or (my_asn != my_peer.asn ):
-                                peers_list.append( my_peer )
+                            #we don't want to add my_asn to the list
+                            if (int(my_asn) == my_peer.asn):
+                                pass
+                            #if we only want result for dest_asn
+                            elif dest_asn and int(dest_asn) != my_peer.asn:
+                                pass
+                            else:
+                                peers_list.append(my_peer)
         return peers_list
 
     # gives the list of sessions you could establish with asn
