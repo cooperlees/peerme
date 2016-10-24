@@ -32,7 +32,7 @@ class PeermeDb():
             self.fetch_json('peerme/euroix-list.json')
         self.global_config = config.config
 
-    async def _get_via_http(self, url, timeout=10):
+    async def _get_via_http(self, url, timeout=30):
         ''' async JSON fetching coro '''
         try:
             async with aiohttp.ClientSession(loop=self.loop) as session:
@@ -47,7 +47,7 @@ class PeermeDb():
 
         return url, data
 
-    def fetch_json(self, ixp_json_file, timeout=10):
+    def fetch_json(self, ixp_json_file, timeout=30):
         async_json_fetch_start = time.time()
         with open(ixp_json_file, 'r') as f:
             ixp_data_urls = json.load(f)
@@ -61,15 +61,13 @@ class PeermeDb():
             ) for url in ixp_data_urls
         ]
         completed_tasks, _ = self.loop.run_until_complete(
-            asyncio.wait(http_tasks, timeout=10)
+            asyncio.wait(http_tasks, timeout=30)
         )
 
         for task in completed_tasks:
             url, data = task.result()
-
             if not data:
                 continue
-
             logging.debug("Writing {} to disk".format(url))
             ixp = json.loads(data)
             # Strip everyting after the first space
@@ -101,23 +99,28 @@ class PeermeDb():
 
     # gives the list of sessions you could establish on an IXP
     # if my_asn is provided, it will remove it from the list
-    async def get_session_by_ix(self, IX_name, my_asn=None):
+    async def get_session_by_ix(self, ix_name, my_asn=None):
         my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         #open the file for the givent IXP
-        with open(self.BASE_PATH + IX_name, 'r') as f:
+        with open(self.BASE_PATH + ix_name, 'r') as f:
             data = json.load(f)
             #there can be several IXP in one file (AMS-IX HK, Chicago, etc...)
             for ixp in data['ixp_list']:
                 try:
                     # name is not mandarory, shortname is
-                    ixp["name"]
+                    ixp_name = ixp["name"]
                 except KeyError:
                     ixp_name = ixp["shortname"]
-                else:
-                    ixp_name = ixp["name"]
-
                 for member in data['member_list']:
+                    if not member:
+                        logging.debug('Empty member on: {}'.format(ixp_name))
+                        continue
+                    if 'connection_list' not in member:
+                        logging.debug(
+                            'Member doens\'t have any connections:'
+                            ' {} {}'.format(ixp_name, member))
+                        continue
                     #a member can have several connections on the same IXP/LAN
                     for connection in member["connection_list"]:
                         my_peer = peer.Peer()
