@@ -10,6 +10,7 @@ import async_timeout
 import glob
 import json
 import logging
+import os
 import re
 import time
 
@@ -48,6 +49,10 @@ class PeermeDb():
 
         return url, data
 
+    def _create_base_path(self):
+        if not os.path.exists(self.BASE_PATH):
+            os.mkdir(self.BASE_PATH)
+
     def fetch_json(self, ixp_json_file):
         async_json_fetch_start = time.time()
         with open(ixp_json_file, 'r') as f:
@@ -77,6 +82,9 @@ class PeermeDb():
             # Make London Great Again - Hack
             if file_name == "London":
                 file_name = "LINX"
+
+            # Ensure we have
+            self._create_base_path()
 
             # TODO: Lets do smarter caching and in memory storage + be atomic
             with open(self.BASE_PATH + file_name, 'w') as out_file:

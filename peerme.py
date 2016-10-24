@@ -99,7 +99,8 @@ def main(ctx, config, debug, data_source, refresh_data):
         peering_api = peeringdb_api.PeermeDb(config_obj, loop)
     elif data_source == 'euroix':
         peering_api = euroix_json.PeermeDb(
-            config_obj, refresh_data, loop)
+            config_obj, refresh_data, loop
+        )
     else:
         raise Exception('Invalid option "{}" for data source.'.format(
             data_source))
