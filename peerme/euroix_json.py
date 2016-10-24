@@ -27,16 +27,17 @@ class PeermeDb():
     BASE_PATH = 'peerme/euroix-json/'
 
     def __init__(self, config, refresh_data=False, loop=None):
+        self.global_config = config.config
+        self.HTTP_TIMEOUT = int(self.global_config['peerme']['http_timeout'])
         self.loop = loop if loop else asyncio.get_event_loop()
         if refresh_data:
             self.fetch_json('peerme/euroix-list.json')
-        self.global_config = config.config
 
-    async def _get_via_http(self, url, timeout=30):
+    async def _get_via_http(self, url):
         ''' async JSON fetching coro '''
         try:
             async with aiohttp.ClientSession(loop=self.loop) as session:
-                with async_timeout.timeout(timeout):
+                with async_timeout.timeout(self.HTTP_TIMEOUT):
                     async with session.get(url) as response:
                         data = await response.text()
         except Exception as e:
@@ -47,7 +48,7 @@ class PeermeDb():
 
         return url, data
 
-    def fetch_json(self, ixp_json_file, timeout=30):
+    def fetch_json(self, ixp_json_file):
         async_json_fetch_start = time.time()
         with open(ixp_json_file, 'r') as f:
             ixp_data_urls = json.load(f)
@@ -61,7 +62,7 @@ class PeermeDb():
             ) for url in ixp_data_urls
         ]
         completed_tasks, _ = self.loop.run_until_complete(
-            asyncio.wait(http_tasks, timeout=30)
+            asyncio.wait(http_tasks, timeout=self.HTTP_TIMEOUT)
         )
 
         for task in completed_tasks:
