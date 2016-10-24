@@ -18,8 +18,8 @@ class PeermeDb(peeringdb.PeeringDB):
         if api_url:
             self.PEERINGFB_API = api_url
 
-        # Host the ASN Result in Memory
-        self.ASN_NET_RESULT = None
+        # Save query results
+        self.ASN_NET_RESULT = {}
 
     async def execute_query(self, endpoint, query):
         '''
@@ -73,14 +73,14 @@ class PeermeDb(peeringdb.PeeringDB):
         Grab the peer name from peeringdb
         '''
         peer_name = None
-        if not self.ASN_NET_RESULT:
+        if asn not in self.ASN_NET_RESULT:
             try:
                 result = await self.execute_query(
                     'net',
                     {'asn': asn}
                 )
                 peer_name = result[0]['name']
-                self.ASN_NET_RESULT = result
+                self.ASN_NET_RESULT[asn] = result
             except peeringdb.RestAPIException as apie:
                 err = ('Unable to find ASN {}\'s name. Exiting. '
                        '({} returned {})'.format(
@@ -88,8 +88,8 @@ class PeermeDb(peeringdb.PeeringDB):
                 logging.error(err)
                 raise
         else:
-            peer_name = self.ASN_NET_RESULT[0]['name']
-            logging.debug('Using cached ASN_NET_RESULT in get_peername_by_asn')  # COOPER
+            peer_name = self.ASN_NET_RESULT[asn][0]['name']
+            logging.debug('Using cached ASN_NET_RESULT in get_peername_by_asn')
 
         return peer_name
 
@@ -100,13 +100,14 @@ class PeermeDb(peeringdb.PeeringDB):
         prefix_limit_v4 = None
         prefix_limit_v6 = None
 
-        if not self.ASN_NET_RESULT:
+        if asn not in self.ASN_NET_RESULT:
             result = await self.execute_query(
                 'net',
                 {'asn': asn})
+            self.ASN_NET_RESULT[asn] = result
         else:
-            result = self.ASN_NET_RESULT
-            logging.debug('Using cached ASN_NET_RESULT in get_prefixlimits_by_asn')  # COOPER
+            result = self.ASN_NET_RESULT[asn]
+            logging.debug('Using cached ASN_NET_RESULT in get_prefixlimits_by_asn')
 
         if result:
             result = result[0]
