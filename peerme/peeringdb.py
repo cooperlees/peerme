@@ -9,6 +9,19 @@ import sys
 
 from . import peer
 
+
+class RestAPIException(Exception):
+    ''' Exception to handle HTTP errors '''
+    def __init__(self, endpoint, query, http_code):
+        self.endpoint = endpoint
+        self.query = query
+        self.full_query = '{}/{}'.format(endpoint, query)
+        self.http_code = http_code
+
+    def __repr__(self):
+        return '{} returned {}'.format(self.full_query, self.http_code)
+
+
 class PeeringDB():
     def __init__(self, config, loop=None):
         self.loop = loop if loop else asyncio.get_event_loop()
@@ -47,9 +60,14 @@ class PeeringDB():
         peerdb_tasks = []
         peers = []
 
+        try:
+            peer_name = await self.get_peername_by_asn(asn)
+        except RestAPIException as apie:
+            # If the ASN does not exist no point running
+            sys.exit(2)
+
         # Potential AsyncIO Tasks
         peer_fids = await self.get_fid_asn(asn)
-        peer_name = await self.get_peername_by_asn(asn)
         prefix_limit_v4, prefix_limit_v6 = await self.get_prefixlimits_by_asn(asn)
         my_fids = await self.get_fid_asn(
             self.global_config['peerme']['my_asn'])

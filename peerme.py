@@ -80,8 +80,8 @@ def _handle_debug(ctx, param, debug):
 @click.option(
     '-s',
     '--data-source',
-    help='Choose datasource to get peers from (pdbsql, euroix)',
-    default='pdbsql'
+    help='Choose Peering datasource (pdbapi [default], pdbsql, euroix)',
+    default='pdbapi'
 )
 
 @click.pass_context
