@@ -106,17 +106,12 @@ class PeermeDb():
                 full_peers_list.append(peer)
         return full_peers_list
 
-<<<<<<< HEAD
+
     async def get_session_by_ix(self, ix_name, dest_asn=None):
         '''
         gives the list of sessions you could establish on an IXP
         if dest_asn is provided, it will only return peer information for that one
         '''
-=======
-    # gives the list of sessions you could establish on an IXP
-    # if my_asn is provided, it will remove it from the list
-    async def get_session_by_ix(self, ix_name, my_asn=None):
->>>>>>> cooperlees/master
         my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         #open the file for the givent IXP
