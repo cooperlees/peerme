@@ -71,4 +71,4 @@ Commands:
 This tool was created @ RIPE 73 Hackathon by:
 * Cooper Lees <me@cooperlees.com>
 * James Paussa <james@paussa.net>
-* Arnaud Fenioux <arnaud@afenioux.fr>
+* Arnaud Fenioux <peerme@afenioux.fr>

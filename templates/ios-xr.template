@@ -1,0 +1,21 @@
+router bgp {{my_asn}}
+{% if peer.peer_ipv4 %}   neighbor {{peer.peer_ipv4}}
+    remote-as {{peer.asn}}
+    description {{peer.name}} at {{peer.ix_desc}}
+    address-family ipv4 unicast
+      maximum-prefix {{peer.prefix_limit_v4}}
+      route-policy RP-IX4-IN in
+      route-policy RP-IX4-OUT out
+      exit
+    exit{% endif %}
+{% if peer.peer_ipv6 %}  neighbor {{peer.peer_ipv6}}
+    remote-as {{peer.asn}}
+    description {{peer.name}} at {{peer.ix_desc}}
+    address-family ipv6 unicast
+        maximum-prefix {{peer.prefix_limit_v6}}
+        route-policy RP-IX6-IN in
+        route-policy RP-IX6-OUT out
+      exit
+    exit
+{% endif %}  exit
+
