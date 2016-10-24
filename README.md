@@ -67,6 +67,7 @@ Commands:
 [peerme]
 #set your ASN here
 my_asn=32934
+http_timeout=30
 ```
 
 # Dev Instructions

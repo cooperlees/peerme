@@ -181,11 +181,8 @@ class PeermeDb():
                                                 if inetF == "ipv6" and optionals == "as_macro": my_peer.as_set_v6 = connection["vlan_list"][inetF][optionals]
                                 except KeyError:
                                     pass
-                            #we don't want to add my_asn to the list
-                            if (int(my_asn) == my_peer.asn):
-                                pass
                             #if we only want result for dest_asn
-                            elif dest_asn and int(dest_asn) != my_peer.asn:
+                            if dest_asn and (int(dest_asn) != my_peer.asn):
                                 pass
                             else:
                                 peers_list.append(my_peer)
