@@ -36,24 +36,18 @@ Commands:
 ./peerme.py -s pdbsql discover -i LINX # -i : not implemented
 ./peerme.py -s pdbsql generate -i LINX -t generic.template  # -i :not implemented
 ./peerme.py -s pdbsql generate -d 15169 -t generic.template
-./peerme.py -s pdbsql generate -d 15169 -t ios.template
-./peerme.py -s pdbsql generate -d 15169 -t juniper.template
 
-#pdbapi not functionnal yet
+
 ./peerme.py -s pdbapi discover -d 32934
-./peerme.py -s pdbapi discover -i FranceIX-MRS
-./peerme.py -s pdbapi generate -i AMS-IX
-./peerme.py -s pdbapi generate -d 15169 -t generic.template
+./peerme.py -s pdbapi discover -i FranceIX-MRS # -i :not implemented
+./peerme.py -s pdbapi generate -i AMS-IX # -i :not implemented
 ./peerme.py -s pdbapi generate -d 15169 -t ios.template
-./peerme.py -s pdbapi generate -d 15169 -t juniper.template
 
 ./peerme.py -s euroix --refresh-data
 ./peerme.py -s euroix discover -d 32934
 ./peerme.py -s euroix discover -i FranceIX-MRS
-./peerme.py -s euroix generate -i FranceIX-PAR -t generic.template
-./peerme.py -s euroix generate -d 15169 -t generic.template
-./peerme.py -s euroix generate -d 15169 -t ios.template
-./peerme.py -s euroix generate -d 15169 -t juniper.template
+./peerme.py -s euroix generate -i FranceIX-PAR -t ios-xr.template
+./peerme.py -s euroix generate -d 15169 -t junos.template
 
 ```
 
@@ -71,4 +65,4 @@ Commands:
 This tool was created @ RIPE 73 Hackathon by:
 * Cooper Lees <me@cooperlees.com>
 * James Paussa <james@paussa.net>
-* Arnaud Fenioux <arnaud@afenioux.fr>
+* Arnaud Fenioux <peerme@afenioux.fr>
