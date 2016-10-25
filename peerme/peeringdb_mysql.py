@@ -15,12 +15,12 @@ from . import peeringdb
 
 class PeermeDb(peeringdb.PeeringDB):
     async def get_pool(self):
+        HOST = self.global_config['peeringdb_mysql']['host']
+        USER = self.global_config['peeringdb_mysql']['user']
+        PASS = self.global_config['peeringdb_mysql']['pass']
+        PORT = int(self.global_config['peeringdb_mysql']['port'])
+        DATABASE = self.global_config['peeringdb_mysql']['database']
         try:
-            HOST = self.global_config['peeringdb_mysql']['host']
-            USER = self.global_config['peeringdb_mysql']['user']
-            PASS = self.global_config['peeringdb_mysql']['pass']
-            PORT = int(self.global_config['peeringdb_mysql']['port'])
-            DATABASE = self.global_config['peeringdb_mysql']['database']
             self.pool = await aiomysql.create_pool(
                 host=HOST,
                 port=PORT,
@@ -33,18 +33,17 @@ class PeermeDb(peeringdb.PeeringDB):
             logging.critical("DB Connect Error: {}".format(pmye))
             sys.exit(1)
 
+        logging.debug("Obtained DB connection pool to {}".format(HOST))
+
     async def execute_query(self, query):
-        '''
-        TODO: fix the mysql pool behaviour here.
-        '''
-        await self.get_pool()
+        if not self.pool:
+            await self.get_pool()
+
         async with self.pool.acquire() as conn:
             async with conn.cursor(aiomysql.DictCursor) as cur:
                 await cur.execute(query)
-                #print(cur.description)  # Cooper
                 rows = await cur.fetchall()
-        self.pool.close()
-        await self.pool.wait_closed()
+
         return rows
 
     async def get_fid_asn(self, asn):
