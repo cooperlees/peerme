@@ -3,20 +3,20 @@
 # Made for the RIPE IXP Tools Hackathon
 #
 # BSD 2-Clause License
-# 
+#
 # Copyright (c) 2016, Cooper Lees
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # * Redistributions of source code must retain the above copyright notice, this
 #   list of conditions and the following disclaimer.
-# 
+#
 # * Redistributions in binary form must reproduce the above copyright notice,
 #   this list of conditions and the following disclaimer in the documentation
 #   and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,11 +33,15 @@ try:
 except ImportError:
     from distutils.core import setup
 
+# since we've distutils support we can't use setuptools.find_packages for this
+packages = ['peerme', 'peerme.commands']
+
+
 from peerme import __version__
 
 setup(name='peerme',
       version=__version__,
-      packages=['peerme'],
+      packages=packages,
       url='http://github.com/cooperlees/peerme',
       license='BSD 2-Clause',
       author='Cooper Lees',
@@ -55,4 +59,11 @@ setup(name='peerme',
           'jinja2',
           'aiomysql >= 0.0.9 ',
           'click >= 5.0',
-      ])
+      ],
+      entry_points={
+          'console_scripts': [
+              'peerme = peerme.main:script_entry'
+          ]
+      },
+      include_package_data=True,
+)
