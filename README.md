@@ -3,8 +3,10 @@ Tool to discover and generate possible peerings between Internet Autonomous Syst
 
 GOAL: Make Peering Great Again!
 
+```
 "peerme discover" gives a list of IP and IXP you have in common with a specified ASN.
 "peerme generate" make the configuration from a template.
+```
 
 # Requirements
 * Python >= 3.5
@@ -53,7 +55,9 @@ Commands:
 ./peerme.py -s euroix --refresh-data
 ./peerme.py -s euroix discover -d 32934
 ./peerme.py -s euroix discover -i FranceIX-MRS
+./peerme.py -s euroix discover -d 8218 -i FranceIX-PAR
 ./peerme.py -s euroix generate -i FranceIX-PAR -t ios-xr.template
+./peerme.py -s euroix generate -d 8218 -i FranceIX-PAR -t ios.template
 ./peerme.py -s euroix generate -d 15169 -t junos.template
 
 ```
@@ -63,6 +67,7 @@ Commands:
 [peerme]
 #set your ASN here
 my_asn=32934
+http_timeout=30
 ```
 
 # Dev Instructions
