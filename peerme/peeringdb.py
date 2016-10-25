@@ -27,6 +27,9 @@ class PeeringDB():
         self.loop = loop if loop else asyncio.get_event_loop()
         self.global_config = config.config
 
+        # Var to hold a DB Connection Pool if needed
+        self.pool = None
+
     def validate_ip_address(self, address, af=6):
         if af == 4:
             try:
@@ -99,6 +102,12 @@ class PeeringDB():
                 this_peer.prefix_limit_v4 = prefix_limit_v4
                 this_peer.prefix_limit_v6 = prefix_limit_v6
                 peers.append(this_peer)
+
+        # If we have a DB Connection lets close the fucker
+        if self.pool:
+            self.pool.close()
+            await self.pool.wait_closed()
+
         return peers
 
     async def get_session_by_ix(self, ix_name):
