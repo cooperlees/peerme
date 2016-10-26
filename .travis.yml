@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.5"
+install:
+  - pip install .
+script:
+  - peerme -s pdbapi discover -d 32934
+  - peerme -s pdbapi generate -d 15169 -t ios.template
+  - python setup.py test
+
+
