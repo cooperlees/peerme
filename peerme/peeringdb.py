@@ -47,6 +47,13 @@ class PeeringDB():
             raise Exception("Invalid AF: {}".format(af))
         return False
 
+    async def _get_fid_info(self, asn, fid):
+        ''' Function to return a nice iterable tuple for output generation '''
+        return (
+            await self.get_ips_by_asn_fid(asn, fid),
+            await self.get_fidname_by_fid(fid),
+        )
+
     async def get_session_by_asn(self, asn):
         '''
         Find all sessions we can peer with this ASN.
@@ -79,17 +86,17 @@ class PeeringDB():
         prefix_limit_v4, prefix_limit_v6 = tasks_output[1]
         my_fids = tasks_output[2]
 
+        # Lets Generate all the asyncio tasks for fid data calls
         common_fids = list(set(my_fids) & set(peer_fids))
+        fid_tasks = []
         for fid in common_fids:
+            fid_tasks.append(self._get_fid_info(asn, fid))
+        if len(fid_tasks) < 1:
+            logging.debug('No fid tasks generated - why?')
+            return peers
 
-            fid_tasks = [
-                self.get_ips_by_asn_fid(asn, fid),
-                self.get_fidname_by_fid(fid),
-            ]
-            tasks_output = await asyncio.gather(*fid_tasks)
-            ips_in_fid = tasks_output[0]
-            fidname = tasks_output[1]
-
+        tasks_output = await asyncio.gather(*fid_tasks)
+        for ips_in_fid, fidname in tasks_output:
             for ip in ips_in_fid:
                 this_peer = peer.Peer()
                 this_peer.asn = asn
