@@ -78,6 +78,9 @@ class DiscoverPeers(PeermeCmd):
             peers_result = self.opts.loop.run_until_complete(
                 self.opts.db.get_session_by_ix(dest_ixp)
             )
+        else:
+            raise Exception('Please specify an ASN or IXP to query')
+
         if json:
             self._json_output(peers_result)
         else:
