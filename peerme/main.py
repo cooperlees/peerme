@@ -83,8 +83,6 @@ def _handle_debug(ctx, param, debug):
 def main(ctx, config, debug, data_source, refresh_data):
     '''
         Discover and generate potential peering endpoints @ IXs
-
-        TODO: Support API calls in ther future as well as a local DB
     '''
     loop = asyncio.get_event_loop()
     config_obj = peerme_config.PeermeConfig(config)
