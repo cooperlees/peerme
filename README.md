@@ -34,6 +34,7 @@ Commands:
   discover  All Discovered potential peerings
   generate  Generate rendered templates using the found...
   pinder    Request a right swipe or check the status of...
+  version   Displaty PyPI version
 ```
 
 # Examples
@@ -66,19 +67,17 @@ Commands:
 ```
 [peerme]
 #set your ASN here
-my_asn=32934
+my_asn=7575
 http_timeout=30
 ```
 
 # Dev Instructions
 ## Mac OS X
 * Get Brew: http://brew.sh/
-* brew install git python3
-* pip3 install aiomysql click jinja2 aiohttp
+* brew install python3 && pip3 install peerme
 
 ## Ubuntu >= 16.10
-* sudo apt install python3-pip git
-* pip3 install aiomysql click jinja2 aiohttp
+* sudo apt install python3-pip && pip3 install peerme
 
 # Feedback
 This tool was created @ RIPE 73 Hackathon by:
