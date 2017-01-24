@@ -28,20 +28,12 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
-
-# since we've distutils support we can't use setuptools.find_packages for this
-packages = ['peerme', 'peerme.commands']
-
-
 from peerme import __version__
+from setuptools import setup, find_packages
 
 setup(name='peerme',
       version=__version__,
-      packages=packages,
+      packages=find_packages(),
       url='http://github.com/cooperlees/peerme',
       license='BSD 2-Clause',
       author='Cooper Lees',

@@ -35,7 +35,7 @@ __version_info__ = namedtuple(
     'version_info',
     'major minor micro releaselevel serial')(major=1,
                                              minor=0,
-                                             micro=0,
+                                             micro=1,
                                              releaselevel='alpha',
                                              serial=69)
 
