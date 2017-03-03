@@ -74,11 +74,11 @@ http_timeout=30
 ## Mac OS X
 * Get Brew: http://brew.sh/
 * brew install git python3
-* pip3 install aiomysql click jinja2 aiohttp
+* pip3 install peerme
 
 ## Ubuntu >= 16.10
 * sudo apt install python3-pip git
-* pip3 install aiomysql click jinja2 aiohttp
+* pip3 install peerme
 
 # Feedback
 This tool was created @ RIPE 73 Hackathon by:
