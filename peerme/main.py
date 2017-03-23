@@ -12,6 +12,7 @@ from . import euroix_json
 from .commands.generate import GenerateConfigCli
 from .commands.discover import DiscoverCli
 from .commands.request import RequestCli
+from .commands.version import VersionCli
 
 
 CLICK_CONTEXT_SETTINGS = {'help_option_names': ('-h', '--help')}
@@ -84,6 +85,7 @@ def main(ctx, config, debug, data_source, refresh_data):
     '''
         Discover and generate potential peering endpoints @ IXs
     '''
+
     loop = asyncio.get_event_loop()
     config_obj = peerme_config.PeermeConfig(config)
     if data_source == 'pdbsql':
@@ -107,6 +109,7 @@ def add_internal_modules():
     main.add_command(DiscoverCli().discover)
     main.add_command(GenerateConfigCli().generate)
     main.add_command(RequestCli().pinder)
+    main.add_command(VersionCli().version)
 
 
 def script_entry():
