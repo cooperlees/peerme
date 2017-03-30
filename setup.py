@@ -48,9 +48,9 @@ setup(name='peerme',
       ],
       install_requires=[
           'aiohttp',
-          'jinja2',
-          'aiomysql >= 0.0.9 ',
+          'aiomysql >= 0.0.9',
           'click >= 5.0',
+          'jinja2',
       ],
       entry_points={
           'console_scripts': [
