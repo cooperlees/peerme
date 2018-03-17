@@ -1,4 +1,3 @@
-import click
 from click.testing import CliRunner
 
 from unittest import TestCase
@@ -18,7 +17,7 @@ class BaseTest(TestCase):
 
     def invokeCli(self, *args, **kwargs):
         result = self.runner.invoke(self.main, *args, **kwargs)
-        self.assertIsNone(result.exception, result.exception)
+        self.assertIsNone(result.exception)
         return result
 
 
@@ -42,6 +41,7 @@ class BasicTests(BaseTest):
     #
     #            result = self.invokeCli(command)
     #            self.assertEqual(result.exit_code, 0, result.output)
+
     def test_euroix(self):
         for command in [
             "-s euroix --refresh-data discover -d 32934",

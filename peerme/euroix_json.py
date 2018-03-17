@@ -53,6 +53,7 @@ class PeermeDb():
 
     def fetch_json(self, ixp_json_file):
         async_json_fetch_start = time.time()
+        logging.info("Atemping to open {}".format(ixp_json_file))
         with open(ixp_json_file, 'r') as f:
             ixp_data_urls = json.load(f)
         logging.info("Refreshing {} IXP JSON Datasets".format(len(ixp_data_urls)))
@@ -65,6 +66,7 @@ class PeermeDb():
         for task in completed_tasks:
             url, data = task.result()
             if not data:
+                logging.error("Unable to load data for {}".format(url))
                 continue
 
             logging.debug("Writing {} to disk".format(url))
@@ -91,16 +93,16 @@ class PeermeDb():
             filename = re.sub('^.*\/', '', filename)
             # get the list per IXP and merge it
             peers_list = self.session_by_ix(filename)
-            for peer in peers_list:
-                full_peers_list.append(peer)
+            for a_peer in peers_list:
+                full_peers_list.append(a_peer)
         return full_peers_list
 
     async def get_session_by_ix(self, ix_name, dest_asn=None):
         '''
         gives the list of sessions you could establish on an IXP
-        if dest_asn is provided, it will only return peer information for that one
+        if dest_asn is provided,
+        it will only return peer information for that one
         '''
-        my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         # open the file for the givent IXP
         with open(self.BASE_PATH + ix_name, 'r') as f:
@@ -230,7 +232,8 @@ class PeermeDb():
         return peers_list
 
     # gives the list of sessions you could establish with asn
-    # if my_asn is provided, it will only return the list of sessions on IXP you have in common
+    # if my_asn is provided, it will only return
+    # the list of sessions on IXP you have in common
     async def get_session_by_asn(self, asn):
         my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
@@ -242,13 +245,15 @@ class PeermeDb():
             ixp_peers_list = await self.get_session_by_ix(filename)
             # we seek on the peers_list if my_asn is present and mark it
             present = []
-            for peer in ixp_peers_list:
-                if peer.asn == int(my_asn):
-                    present.append(peer.ix_desc)
-            # we seek for the asn we want to peer with, and make sure we are on the same IX
-            for peer in ixp_peers_list:
-                if peer.asn == int(asn) and peer.ix_desc in present:
-                    # add peer to peers_list if my_asn in not define OR my_asn is present
+            for a_peer in ixp_peers_list:
+                if a_peer.asn == int(my_asn):
+                    present.append(a_peer.ix_desc)
+            # we seek for the asn we want to peer with
+            # and make sure we are on the same IX
+            for a_peer in ixp_peers_list:
+                if a_peer.asn == int(asn) and a_peer.ix_desc in present:
+                    # add peer to peers_list if my_asn in not define OR
+                    # my_asn is present
                     if (my_asn and present) or my_asn is None:
-                        peers_list.append(peer)
+                        peers_list.append(a_peer)
         return peers_list

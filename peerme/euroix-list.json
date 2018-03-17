@@ -2,7 +2,6 @@
     "https://www.franceix.net/api/members/list/json",
     "https://www.franceix.net/api/members/list/json?location=PAR",
     "https://www.franceix.net/api/members/list/json?location=MRS",
-    "https://www.linx.net/members.json.php",
     "https://www.inex.ie/ixp/apiv1/member-list/list",
     "https://www.ecix.net/memberlist_BER.json",
     "https://www.ecix.net/memberlist_DUS.json",
@@ -19,5 +18,5 @@
     "https://lg.megaport.com/megaport.json",
     "http://www.nix.cz/networks.json",
     "http://www.nix.sk/networks.json",
-    "http://square.gigapix.pt/participants.json",
+    "http://square.gigapix.pt/participants.json"
 ]

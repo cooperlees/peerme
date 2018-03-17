@@ -14,6 +14,7 @@ from .commands.discover import DiscoverCli
 from .commands.request import RequestCli
 from .commands.version import VersionCli
 
+
 CLICK_CONTEXT_SETTINGS = {'help_option_names': ('-h', '--help')}
 
 
@@ -29,7 +30,7 @@ class Options():
         self.human_start_time = time.strftime('%Y%m%d%H%M%S', time.gmtime(start_time))
         logging.debug("{} started @ {}".format(sys.argv[0], self.human_start_time))
 
-    def __repr__(self):
+    def __str__(self):
         ''' String Representation for debugging '''
         return 'CLI stated @ {} - Debug is {}'.format(self.debug, self.human_start_time)
 
