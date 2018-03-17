@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 '''
     Where we make the things for EuroIX JSON
 '''
@@ -16,6 +15,7 @@ import time
 
 from . import peer
 
+
 class PeermeDb():
     '''
         Replaces talking to the Peering DB and generates output based on
@@ -23,8 +23,7 @@ class PeermeDb():
 
         We HTTP download the data and cache locally
     '''
-
-    #this gets JSON files from IXP and save it with proper names
+    # this gets JSON files from IXP and save it with proper names
     BASE_PATH = 'peerme/euroix-json/'
 
     def __init__(self, config, refresh_data=False, loop=None):
@@ -42,11 +41,10 @@ class PeermeDb():
                     async with session.get(url) as response:
                         data = await response.text()
         except Exception as e:
-            logging.error("{} unable to be fetched: {}".format(
-                url, str(e)), exc_info=True,
+            logging.error(
+                "{} unable to be fetched: {}".format(url, str(e)), exc_info=True
             )
             data = None
-
         return url, data
 
     def _create_base_path(self):
@@ -57,39 +55,30 @@ class PeermeDb():
         async_json_fetch_start = time.time()
         with open(ixp_json_file, 'r') as f:
             ixp_data_urls = json.load(f)
-        logging.info("Refreshing {} IXP JSON Datasets".format(
-            len(ixp_data_urls)
-        ))
-
+        logging.info("Refreshing {} IXP JSON Datasets".format(len(ixp_data_urls)))
         http_tasks = [
-            asyncio.ensure_future(
-                self._get_via_http(url)
-            ) for url in ixp_data_urls
+            asyncio.ensure_future(self._get_via_http(url)) for url in ixp_data_urls
         ]
         completed_tasks, _ = self.loop.run_until_complete(
             asyncio.wait(http_tasks, timeout=self.HTTP_TIMEOUT)
         )
-
         for task in completed_tasks:
             url, data = task.result()
             if not data:
                 continue
+
             logging.debug("Writing {} to disk".format(url))
             ixp = json.loads(data)
             # Strip everyting after the first space
             file_name = re.sub(' .*$', '', ixp['ixp_list'][0]['shortname'])
-
             # Make London Great Again - Hack
             if file_name == "London":
                 file_name = "LINX"
-
             # Ensure we have
             self._create_base_path()
-
             # TODO: Lets do smarter caching and in memory storage + be atomic
             with open(self.BASE_PATH + file_name, 'w') as out_file:
                 out_file.write(data)
-
         fetch_time = time.time() - async_json_fetch_start
         logging.debug("HTTP JSON data fetch took {} seconds".format(fetch_time))
 
@@ -98,14 +87,13 @@ class PeermeDb():
         full_peers_list = []
         file_list = glob.glob(self.BASE_PATH + "*")
         for filename in file_list:
-            #stripping foler name
+            # stripping foler name
             filename = re.sub('^.*\/', '', filename)
-            #get the list per IXP and merge it
+            # get the list per IXP and merge it
             peers_list = self.session_by_ix(filename)
             for peer in peers_list:
                 full_peers_list.append(peer)
         return full_peers_list
-
 
     async def get_session_by_ix(self, ix_name, dest_asn=None):
         '''
@@ -114,10 +102,10 @@ class PeermeDb():
         '''
         my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
-        #open the file for the givent IXP
+        # open the file for the givent IXP
         with open(self.BASE_PATH + ix_name, 'r') as f:
             data = json.load(f)
-            #there can be several IXP in one file (AMS-IX HK, Chicago, etc...)
+            # there can be several IXP in one file (AMS-IX HK, Chicago, etc...)
             for ixp in data['ixp_list']:
                 try:
                     # name is not mandarory, shortname is
@@ -128,17 +116,20 @@ class PeermeDb():
                     if not member:
                         logging.debug('Empty member on: {}'.format(ixp_name))
                         continue
+
                     if 'connection_list' not in member:
                         logging.debug(
                             'Member doens\'t have any connections:'
-                            ' {} {}'.format(ixp_name, member))
+                            ' {} {}'.format(ixp_name, member)
+                        )
                         continue
-                    #a member can have several connections on the same IXP/LAN
+
+                    # a member can have several connections on the same IXP/LAN
                     for connection in member["connection_list"]:
                         my_peer = peer.Peer()
-                        #my_peer.ix_desc = ixp_name
+                        # my_peer.ix_desc = ixp_name
                         my_peer.ix_desc = ixp["shortname"]
-                        #connection_list list connections for all IXP in the file...
+                        # connection_list list connections for all IXP in the file...
                         if ixp["ixp_id"] == connection["ixp_id"]:
                             my_peer.asn = member["asnum"]
                             my_peer.name = member["name"]
@@ -148,40 +139,90 @@ class PeermeDb():
                                     try:
                                         my_peer.peer_ipv6 = vlan["ipv6"]["address"]
                                     except KeyError:
-                                        #because LINX has problem with IPv6
+                                        # because LINX has problem with IPv6
                                         my_peer.peer_ipv6 = ''
                                     for inetF in ["ipv4", "ipv6"]:
                                         for optionals in ["max_prefix", "as_macro"]:
                                             try:
                                                 vlan[inetF][optionals]
                                             except KeyError:
-                                                 pass
+                                                pass
                                             else:
-                                                if inetF == "ipv4" and optionals == "max_prefix": my_peer.prefix_limit_v4 = vlan[inetF][optionals]
-                                                if inetF == "ipv6" and optionals == "max_prefix": my_peer.prefix_limit_v6 = vlan[inetF][optionals]
-                                                if inetF == "ipv4" and optionals == "as_macro": my_peer.as_set_v4 = vlan[inetF][optionals]
-                                                if inetF == "ipv6" and optionals == "as_macro": my_peer.as_set_v6 = vlan[inetF][optionals]
+                                                if inetF == "ipv4" and optionals == "max_prefix":
+                                                    my_peer.prefix_limit_v4 = vlan[
+                                                        inetF
+                                                    ][
+                                                        optionals
+                                                    ]
+                                                if inetF == "ipv6" and optionals == "max_prefix":
+                                                    my_peer.prefix_limit_v6 = vlan[
+                                                        inetF
+                                                    ][
+                                                        optionals
+                                                    ]
+                                                if inetF == "ipv4" and optionals == "as_macro":
+                                                    my_peer.as_set_v4 = vlan[inetF][
+                                                        optionals
+                                                    ]
+                                                if inetF == "ipv6" and optionals == "as_macro":
+                                                    my_peer.as_set_v6 = vlan[inetF][
+                                                        optionals
+                                                    ]
                             except KeyError:
-                                 pass
+                                pass
                             except TypeError:
                                 try:
-                                    #this case is due to AMS-IX not properly using vlan_list yet
-                                    my_peer.peer_ipv4 = connection["vlan_list"]["ipv4"]["address"]
-                                    my_peer.peer_ipv6 = connection["vlan_list"]["ipv6"]["address"]
+                                    # this case is due to AMS-IX not properly using vlan_list yet
+                                    my_peer.peer_ipv4 = connection["vlan_list"]["ipv4"][
+                                        "address"
+                                    ]
+                                    my_peer.peer_ipv6 = connection["vlan_list"]["ipv6"][
+                                        "address"
+                                    ]
                                     for inetF in ["ipv4", "ipv6"]:
                                         for optionals in ["max_prefix", "as_macro"]:
                                             try:
-                                                connection["vlan_list"][inetF][optionals]
+                                                connection["vlan_list"][inetF][
+                                                    optionals
+                                                ]
                                             except KeyError:
-                                                 pass
+                                                pass
                                             else:
-                                                if inetF == "ipv4" and optionals == "max_prefix": my_peer.prefix_limit_v4 = connection["vlan_list"][inetF][optionals]
-                                                if inetF == "ipv6" and optionals == "max_prefix": my_peer.prefix_limit_v6 = connection["vlan_list"][inetF][optionals]
-                                                if inetF == "ipv4" and optionals == "as_macro": my_peer.as_set_v4 = connection["vlan_list"][inetF][optionals]
-                                                if inetF == "ipv6" and optionals == "as_macro": my_peer.as_set_v6 = connection["vlan_list"][inetF][optionals]
+                                                if inetF == "ipv4" and optionals == "max_prefix":
+                                                    my_peer.prefix_limit_v4 = connection[
+                                                        "vlan_list"
+                                                    ][
+                                                        inetF
+                                                    ][
+                                                        optionals
+                                                    ]
+                                                if inetF == "ipv6" and optionals == "max_prefix":
+                                                    my_peer.prefix_limit_v6 = connection[
+                                                        "vlan_list"
+                                                    ][
+                                                        inetF
+                                                    ][
+                                                        optionals
+                                                    ]
+                                                if inetF == "ipv4" and optionals == "as_macro":
+                                                    my_peer.as_set_v4 = connection[
+                                                        "vlan_list"
+                                                    ][
+                                                        inetF
+                                                    ][
+                                                        optionals
+                                                    ]
+                                                if inetF == "ipv6" and optionals == "as_macro":
+                                                    my_peer.as_set_v6 = connection[
+                                                        "vlan_list"
+                                                    ][
+                                                        inetF
+                                                    ][
+                                                        optionals
+                                                    ]
                                 except KeyError:
                                     pass
-                            #if we only want result for dest_asn
+                            # if we only want result for dest_asn
                             if dest_asn and (int(dest_asn) != my_peer.asn):
                                 pass
                             else:
@@ -194,20 +235,20 @@ class PeermeDb():
         my_asn = self.global_config['peerme']['my_asn']
         peers_list = []
         file_list = glob.glob(self.BASE_PATH + "*")
-        #load all files in order to seek on all IXP
+        # load all files in order to seek on all IXP
         for filename in file_list:
-            #stripping foler name
+            # stripping foler name
             filename = re.sub('^.*\/', '', filename)
             ixp_peers_list = await self.get_session_by_ix(filename)
-            #we seek on the peers_list if my_asn is present and mark it
+            # we seek on the peers_list if my_asn is present and mark it
             present = []
             for peer in ixp_peers_list:
                 if peer.asn == int(my_asn):
                     present.append(peer.ix_desc)
-            #we seek for the asn we want to peer with, and make sure we are on the same IX
+            # we seek for the asn we want to peer with, and make sure we are on the same IX
             for peer in ixp_peers_list:
                 if peer.asn == int(asn) and peer.ix_desc in present:
-                    #add peer to peers_list if my_asn in not define OR my_asn is present
+                    # add peer to peers_list if my_asn in not define OR my_asn is present
                     if (my_asn and present) or my_asn is None:
                         peers_list.append(peer)
         return peers_list

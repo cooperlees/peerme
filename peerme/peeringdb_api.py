@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import aiohttp
 import asyncio
 import json
@@ -17,7 +16,6 @@ class PeermeDb(peeringdb.PeeringDB):
         # Allow custom URL in a instance if required
         if api_url:
             self.PEERINGFB_API = api_url
-
         # Save query results
         self.ASN_NET_RESULT = {}
 
@@ -33,6 +31,7 @@ class PeermeDb(peeringdb.PeeringDB):
                 if resp.status == 200:
                     result = await resp.json()
                     return result.get('data')
+
                 else:
                     raise peeringdb.RestAPIException(url, query, resp.status)
 
@@ -41,10 +40,7 @@ class PeermeDb(peeringdb.PeeringDB):
         Get all the fabrics that an ASN participates on.
         '''
         fids = []
-        result = await self.execute_query(
-            'netixlan',
-            {'asn': asn})
-
+        result = await self.execute_query('netixlan', {'asn': asn})
         fids = [f['ix_id'] for f in result]
         return fids
 
@@ -52,18 +48,14 @@ class PeermeDb(peeringdb.PeeringDB):
         '''
         Get all the IPs that an ASN has on a fabric.
         '''
-        result = await self.execute_query(
-            'netixlan',
-            {'asn': asn, 'ix_id': fid})
+        result = await self.execute_query('netixlan', {'asn': asn, 'ix_id': fid})
         return result
 
     async def get_fidname_by_fid(self, fid):
         '''
         Get the long name of the fabric to use as a identifier.
         '''
-        result = await self.execute_query(
-            'ix',
-            {'id': fid})
+        result = await self.execute_query('ix', {'id': fid})
         if result:
             result = result[0].get('name')
         return result
@@ -75,22 +67,20 @@ class PeermeDb(peeringdb.PeeringDB):
         peer_name = None
         if asn not in self.ASN_NET_RESULT:
             try:
-                result = await self.execute_query(
-                    'net',
-                    {'asn': asn}
-                )
+                result = await self.execute_query('net', {'asn': asn})
                 peer_name = result[0]['name']
                 self.ASN_NET_RESULT[asn] = result
             except peeringdb.RestAPIException as apie:
-                err = ('Unable to find ASN {}\'s name. Exiting. '
-                       '({} returned {})'.format(
-                       asn, apie.full_query, apie.http_code))
+                err = (
+                    'Unable to find ASN {}\'s name. Exiting. '
+                    '({} returned {})'.format(asn, apie.full_query, apie.http_code)
+                )
                 logging.error(err)
                 raise
+
         else:
             peer_name = self.ASN_NET_RESULT[asn][0]['name']
             logging.debug('Using cached ASN_NET_RESULT in get_peername_by_asn')
-
         return peer_name
 
     async def get_prefixlimits_by_asn(self, asn):
@@ -99,19 +89,14 @@ class PeermeDb(peeringdb.PeeringDB):
         '''
         prefix_limit_v4 = None
         prefix_limit_v6 = None
-
         if asn not in self.ASN_NET_RESULT:
-            result = await self.execute_query(
-                'net',
-                {'asn': asn})
+            result = await self.execute_query('net', {'asn': asn})
             self.ASN_NET_RESULT[asn] = result
         else:
             result = self.ASN_NET_RESULT[asn]
             logging.debug('Using cached ASN_NET_RESULT in get_prefixlimits_by_asn')
-
         if result:
             result = result[0]
             prefix_limit_v4 = int(result.get('info_prefixes4'))
             prefix_limit_v6 = int(result.get('info_prefixes6'))
-
         return prefix_limit_v4, prefix_limit_v6

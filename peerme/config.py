@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 '''
     Class to take care of peerme config
 '''
@@ -17,19 +16,14 @@ class PeermeConfig():
         if not self.config.sections():
             self._default_load()
             return
+
         logging.info('Loaded {} config file'.format(conf_file))
 
     def _default_load(self):
         ''' Return a default config '''
-        logging.warning('{} not found - Using default config'.format(
-            self.conf_file
-        ))
+        logging.warning('{} not found - Using default config'.format(self.conf_file))
         self.conf_file = 'default'
-        self.config['peerme'] = {
-            'my_asn': 32934,
-            'http_timeout': 30
-        }
-
+        self.config['peerme'] = {'my_asn': 32934, 'http_timeout': 30}
 
     def __repr__(self):
         output = ''

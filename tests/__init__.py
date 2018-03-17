@@ -5,6 +5,7 @@ from unittest import TestCase
 
 from peerme.main import main, add_internal_modules
 
+
 class BaseTest(TestCase):
 
     @classmethod
@@ -28,21 +29,19 @@ class BasicTests(BaseTest):
             ('-s', 'pdbapi', 'discover', '-d', '7575'),
             ('-s', 'pdbapi', 'generate', '-d', '9268', '-t', 'ios.template'),
         ]:
-
             result = self.invokeCli(command)
             self.assertEqual(result.exit_code, 0, result.output)
 
     # TODO: Come up with a way to test SQL
     # - Hard as we would need to build a MYSQL instance during TravisCI Run
-#    def test_pdbsql(self):
-#        for command in [
-#            ('-s', 'pdbsql', 'discover', '-d', '32934'),
-#            ('-s', 'pdbsql', 'generate', '-d', '15169', '-t', 'generic.template'),
-#        ]:
-#
-#            result = self.invokeCli(command)
-#            self.assertEqual(result.exit_code, 0, result.output)
-
+    #    def test_pdbsql(self):
+    #        for command in [
+    #            ('-s', 'pdbsql', 'discover', '-d', '32934'),
+    #            ('-s', 'pdbsql', 'generate', '-d', '15169', '-t', 'generic.template'),
+    #        ]:
+    #
+    #            result = self.invokeCli(command)
+    #            self.assertEqual(result.exit_code, 0, result.output)
     def test_euroix(self):
         for command in [
             "-s euroix --refresh-data discover -d 32934",

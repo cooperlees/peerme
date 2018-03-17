@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import ipaddress
+
+
 class Peer():
+
     def __init__(self):
         self.asn = int()
         self.ix_desc = str()
@@ -16,7 +19,8 @@ class Peer():
         base_string = (
             '<{NAME}: IX: {IX}, ASN: {ASN}, '
             'IPv4: {PEER_IPV4}, IPv4 Limit: {IPV4_LIMIT}, '
-            'IPv6: {PEER_IPV6}, IPv6 Limit: {IPV6_LIMIT}>')
+            'IPv6: {PEER_IPV6}, IPv6 Limit: {IPV6_LIMIT}>'
+        )
         peer_string = base_string.format(
             NAME=self.name,
             IX=self.ix_desc,

@@ -1,5 +1,4 @@
 #!/usr/bin/env ptyhon3
-
 import aiohttp
 import asyncio
 import ipaddress
@@ -12,6 +11,7 @@ from . import peer
 
 class RestAPIException(Exception):
     ''' Exception to handle HTTP errors '''
+
     def __init__(self, endpoint, query, http_code):
         self.endpoint = endpoint
         self.query = query
@@ -23,10 +23,10 @@ class RestAPIException(Exception):
 
 
 class PeeringDB():
+
     def __init__(self, config, loop=None):
         self.loop = loop if loop else asyncio.get_event_loop()
         self.global_config = config.config
-
         # Var to hold a DB Connection Pool if needed
         self.pool = None
 
@@ -35,23 +35,25 @@ class PeeringDB():
             try:
                 ipaddress.IPv4Address(address)
                 return True
+
             except ipaddress.AddressValueError as ex:
                 logging.error(ex)
         elif af == 6:
             try:
                 ipaddress.IPv6Address(address)
                 return True
+
             except ipaddress.AddressValueError as ex:
                 logging.error(ex)
         else:
             raise Exception("Invalid AF: {}".format(af))
+
         return False
 
     async def _get_fid_info(self, asn, fid):
         ''' Function to return a nice iterable tuple for output generation '''
         return (
-            await self.get_ips_by_asn_fid(asn, fid),
-            await self.get_fidname_by_fid(fid),
+            await self.get_ips_by_asn_fid(asn, fid), await self.get_fidname_by_fid(fid)
         )
 
     async def get_session_by_asn(self, asn):
@@ -68,13 +70,11 @@ class PeeringDB():
             the one provided
         '''
         peers = []
-
         try:
             peer_name = await self.get_peername_by_asn(asn)
         except RestAPIException as apie:
             # If the ASN does not exist no point running
             sys.exit(2)
-
         my_asn = self.global_config['peerme']['my_asn']
         peerdb_tasks = [
             self.get_fid_asn(asn),
@@ -85,7 +85,6 @@ class PeeringDB():
         peer_fids = tasks_output[0]
         prefix_limit_v4, prefix_limit_v6 = tasks_output[1]
         my_fids = tasks_output[2]
-
         # Lets Generate all the asyncio tasks for fid data calls
         common_fids = list(set(my_fids) & set(peer_fids))
         fid_tasks = []
@@ -109,14 +108,11 @@ class PeeringDB():
                 this_peer.prefix_limit_v4 = prefix_limit_v4
                 this_peer.prefix_limit_v6 = prefix_limit_v6
                 peers.append(this_peer)
-
         # If we have a DB Connection lets close the fucker
         if self.pool:
             self.pool.close()
             await self.pool.wait_closed()
-
         return peers
 
     async def get_session_by_ix(self, ix_name):
-
         raise NotImplementedError('get_session_by_ix not supported')

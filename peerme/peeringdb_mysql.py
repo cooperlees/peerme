@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 '''
     Handle all aiomysql interactions
 '''
@@ -13,7 +12,9 @@ import aiomysql
 from pymysql import err as pymysql_err
 from . import peeringdb
 
+
 class PeermeDb(peeringdb.PeeringDB):
+
     async def get_pool(self):
         HOST = self.global_config['peeringdb_mysql']['host']
         USER = self.global_config['peeringdb_mysql']['user']
@@ -32,18 +33,15 @@ class PeermeDb(peeringdb.PeeringDB):
         except pymysql_err.OperationalError as pmye:
             logging.critical("DB Connect Error: {}".format(pmye))
             sys.exit(1)
-
         logging.debug("Obtained DB connection pool to {}".format(HOST))
 
     async def execute_query(self, query):
         if not self.pool:
             await self.get_pool()
-
         async with self.pool.acquire() as conn:
             async with conn.cursor(aiomysql.DictCursor) as cur:
                 await cur.execute(query)
                 rows = await cur.fetchall()
-
         return rows
 
     async def get_fid_asn(self, asn):
@@ -54,7 +52,8 @@ class PeermeDb(peeringdb.PeeringDB):
             'SELECT ix_id '
             'FROM peeringdb_network_ixlan '
             'JOIN peeringdb_ixlan ON ixlan_id = peeringdb_ixlan.id '
-            'WHERE asn={asn} GROUP BY ix_id;')
+            'WHERE asn={asn} GROUP BY ix_id;'
+        )
         query = base_query.format(asn=asn)
         result = await self.execute_query(query)
         return [f['ix_id'] for f in result]
@@ -66,7 +65,8 @@ class PeermeDb(peeringdb.PeeringDB):
         base_query = (
             'SELECT ipaddr4, ipaddr6 FROM peeringdb_network_ixlan '
             'JOIN peeringdb_ixlan ON ixlan_id = peeringdb_ixlan.id '
-            'WHERE ix_id={FID} AND asn = {ASN}')
+            'WHERE ix_id={FID} AND asn = {ASN}'
+        )
         query = base_query.format(FID=fid, ASN=asn)
         result = await self.execute_query(query)
         return result
@@ -75,9 +75,7 @@ class PeermeDb(peeringdb.PeeringDB):
         '''
         Get the long name of the fabric to use as a identifier.
         '''
-        base_query = (
-            'SELECT name_long FROM peeringdb_ix '
-            'WHERE id=\'{FID}\'')
+        base_query = ('SELECT name_long FROM peeringdb_ix ' 'WHERE id=\'{FID}\'')
         query = base_query.format(FID=fid)
         result = await self.execute_query(query)
         if result:
@@ -88,9 +86,7 @@ class PeermeDb(peeringdb.PeeringDB):
         '''
         Get the long name of the fabric to use as a identifier.
         '''
-        base_query = (
-            'SELECT name FROM peeringdb_ix '
-            'WHERE id=\'{FID}\'')
+        base_query = ('SELECT name FROM peeringdb_ix ' 'WHERE id=\'{FID}\'')
         query = base_query.format(FID=fid)
         result = await self.execute_query(query)
         if result:
@@ -101,8 +97,7 @@ class PeermeDb(peeringdb.PeeringDB):
         '''
         Grab the peer name from peeringdb
         '''
-        base_query = (
-            'SELECT name FROM peeringdb_network WHERE asn={ASN}')
+        base_query = ('SELECT name FROM peeringdb_network WHERE asn={ASN}')
         query = base_query.format(ASN=asn)
         result = await self.execute_query(query)
         if result:
@@ -115,7 +110,8 @@ class PeermeDb(peeringdb.PeeringDB):
         '''
         base_query = (
             'SELECT info_prefixes4, info_prefixes6 '
-            'FROM peeringdb_network WHERE asn={ASN}')
+            'FROM peeringdb_network WHERE asn={ASN}'
+        )
         query = base_query.format(ASN=asn)
         result = await self.execute_query(query)
         if result:

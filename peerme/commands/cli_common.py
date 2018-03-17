@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-
-
 class PeermeCmd():
     ''' Base class for all sub commands to inherit from '''
 

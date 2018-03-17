@@ -27,16 +27,10 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 from collections import namedtuple
 
 # a namedtuple like that given by sys.version_info
-__version_info__ = namedtuple(
-    'version_info',
-    'major minor micro releaselevel serial')(major=1,
-                                             minor=0,
-                                             micro=1,
-                                             releaselevel='alpha',
-                                             serial=69)
-
+__version_info__ = namedtuple('version_info', 'major minor micro releaselevel serial')(
+    major=1, minor=0, micro=1, releaselevel='alpha', serial=69
+)
 __version__ = '{v.major}.{v.minor}.{v.micro}'.format(v=__version_info__)

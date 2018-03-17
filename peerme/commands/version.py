@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 '''
     Class to Print the current version
 '''
